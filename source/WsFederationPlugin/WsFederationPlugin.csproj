@@ -7,8 +7,8 @@
     <ProjectGuid>{4C93CD29-54C0-43CC-BF45-68E0DEC91CAA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WsFederationPlugin</RootNamespace>
-    <AssemblyName>WsFederationPlugin</AssemblyName>
+    <RootNamespace>Thinktecture.IdentityServer.v3.WsFederation</RootNamespace>
+    <AssemblyName>Thinktecture.IdentityServer.v3.WsFederation</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
