@@ -51,14 +51,15 @@ task ILMerge -depends Compile {
 	Get-ChildItem -Path $output_directory -Filter *.dll |
 		foreach-object {
 			# Exclude Thinktecture.IdentityServer.Core.dll as that will be the primary assembly
-			if ("$_" -ne "Thinktecture.IdentityServer.v3.WsFederation.dll" -and 
+			if ("$_" -ne "Thinktecture.IdentityServer.v3.WsFederation.dll" -and
+				"$_" -ne "Thinktecture.IdentityServer.dll" -and 
 			    "$_" -ne "Owin.dll") {
 				$input_dlls = "$input_dlls $output_directory\$_"
 			}
 	}
 
 	New-Item $dist_directory\lib\net45 -Type Directory
-	Invoke-Expression "$ilmerge_path /targetplatform:v4 /internalize:ilmerge.exclude /allowDup /target:library /out:$dist_directory\lib\net45\Thinktecture.IdentityServer.v3.WsFederation.dll $input_dlls"
+	Invoke-Expression "$ilmerge_path /targetplatform:v4 /internalize:ilmerge.exclude /allowDup /target:library /out:$dist_directory\lib\net45\Thinktecture.IdentityServer.WsFederation.dll $input_dlls"
 }
 
 task CreateNuGetPackage -depends ILMerge {
