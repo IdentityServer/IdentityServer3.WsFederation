@@ -6,6 +6,7 @@ using System.IdentityModel.Services;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Net.Http;
 using Thinktecture.IdentityServer.Core;
 using Thinktecture.IdentityServer.Core.Authentication;
 using Thinktecture.IdentityServer.Core.Configuration;
@@ -17,6 +18,8 @@ using Thinktecture.IdentityServer.WsFed.Configuration;
 using Thinktecture.IdentityServer.WsFed.ResponseHandling;
 using Thinktecture.IdentityServer.WsFed.Results;
 using Thinktecture.IdentityServer.WsFed.Validation;
+using System.Net;
+using System;
 
 namespace Thinktecture.IdentityServer.WsFed
 {
@@ -126,7 +129,8 @@ namespace Thinktecture.IdentityServer.WsFed
                 message.IdP = result.HomeRealm;
             }
 
-            return new LoginResult(message, this.Request, settings, _internalConfig);
+            var redirect = LoginResult.GetRedirectUrl(message, this.Request, settings, _internalConfig);
+            return Redirect(redirect);
         }
     }
 }
