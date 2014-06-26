@@ -12,6 +12,13 @@
     <description>WS-Federation Plugin for Thinktecture IdentityServer v3.</description>
     <copyright>Copyright 2014</copyright>
     <tags>Thinktecture IdentityServer WS-Federation</tags>
+
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="System.IdentityModel" targetFramework="net45" />
+      <frameworkAssembly assemblyName="System.IdentityModel.Services" targetFramework="net45" />
+      <frameworkAssembly assemblyName="System.Web" targetFramework="net45" />
+    </frameworkAssemblies>
+
     <dependencies>
       <dependency id="Owin" version="1.0"/>
     </dependencies>

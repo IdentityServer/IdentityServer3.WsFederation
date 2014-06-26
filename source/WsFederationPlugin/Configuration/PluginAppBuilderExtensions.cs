@@ -9,7 +9,7 @@ using Microsoft.Owin.Security.DataProtection;
 using Owin;
 using System;
 using Thinktecture.IdentityServer.WsFederation.Configuration;
-using WsFederationConfiguration = Thinktecture.IdentityServer.WsFederation.Configuration;
+using Thinktecture.IdentityServer.WsFederation.Hosting;
 
 namespace Thinktecture.IdentityServer.Core.Configuration
 {
@@ -26,6 +26,7 @@ namespace Thinktecture.IdentityServer.Core.Configuration
             internalConfig.LoginPageUrl = options.LoginPageUrl;
 
             var settings = options.Factory.CoreSettings();
+            // todo - need a better solution for data protection
             if (settings.DataProtector == null)
             {
                 var provider = app.GetDataProtectionProvider();
@@ -34,7 +35,19 @@ namespace Thinktecture.IdentityServer.Core.Configuration
                     provider = new DpapiDataProtectionProvider("idsrv3");
                 }
 
-                internalConfig.DataProtector = new HostDataProtector(provider);
+                var funcProtector = new FuncDataProtector(
+                    (data, entropy) =>
+                    {
+                        var protector = provider.Create(entropy);
+                        return protector.Protect(data);
+                    },
+                    (data, entropy) =>
+                    {
+                        var protector = provider.Create(entropy);
+                        return protector.Unprotect(data);
+                    });
+
+                internalConfig.DataProtector = funcProtector;
             }
             else
             {
@@ -49,9 +62,9 @@ namespace Thinktecture.IdentityServer.Core.Configuration
                         AuthenticationMode = AuthenticationMode.Passive
                     });
 
-                    wsfedApp.Use<AutofacContainerMiddleware>(WsFederationConfiguration.AutofacConfig.Configure(options, internalConfig));
-                    Microsoft.Owin.Infrastructure.SignatureConversions.AddConversions(wsfedApp);
-                    wsfedApp.UseWebApi(WsFederationConfiguration.WebApiConfig.Configure());
+                    wsfedApp.Use<AutofacContainerMiddleware>(AutofacConfig.Configure(options, internalConfig));
+                    Microsoft.Owin.Infrastructure.SignatureConversions.AddConversions(app);
+                    wsfedApp.UseWebApi(WebApiConfig.Configure());
                 });
 
             // todo

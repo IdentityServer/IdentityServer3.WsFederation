@@ -8,13 +8,14 @@ using Autofac.Integration.WebApi;
 using System;
 using Thinktecture.IdentityServer.Core.Configuration;
 using Thinktecture.IdentityServer.Core.Services;
+using Thinktecture.IdentityServer.WsFederation.Hosting;
 using Thinktecture.IdentityServer.WsFederation.ResponseHandling;
 using Thinktecture.IdentityServer.WsFederation.Services;
 using Thinktecture.IdentityServer.WsFederation.Validation;
 
 namespace Thinktecture.IdentityServer.WsFederation.Configuration
 {
-    public static class AutofacConfig
+    internal static class AutofacConfig
     {
         public static IContainer Configure(WsFederationPluginOptions options, InternalConfiguration internalConfig)
         {

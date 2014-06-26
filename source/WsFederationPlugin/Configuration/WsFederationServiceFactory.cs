@@ -12,7 +12,6 @@ namespace Thinktecture.IdentityServer.WsFederation.Configuration
 {
     public class WsFederationServiceFactory
     {
-        // mandatory (external)
         public Func<IUserService> UserService { get; set; }       
         public Func<CoreSettings> CoreSettings { get; set; }
         public Func<WsFederationSettings> WsFederationSettings { get; set; }
