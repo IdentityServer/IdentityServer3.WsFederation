@@ -7,6 +7,7 @@ using Autofac;
 using Autofac.Integration.WebApi;
 using System;
 using Thinktecture.IdentityServer.Core.Configuration;
+using Thinktecture.IdentityServer.Core.Logging;
 using Thinktecture.IdentityServer.Core.Services;
 using Thinktecture.IdentityServer.WsFederation.Hosting;
 using Thinktecture.IdentityServer.WsFederation.ResponseHandling;
@@ -17,6 +18,8 @@ namespace Thinktecture.IdentityServer.WsFederation.Configuration
 {
     internal static class AutofacConfig
     {
+        static ILog Logger = LogProvider.GetCurrentClassLogger();
+
         public static IContainer Configure(WsFederationPluginOptions options, InternalConfiguration internalConfig)
         {
             if (internalConfig == null) throw new ArgumentNullException("internalConfig");
@@ -28,10 +31,11 @@ namespace Thinktecture.IdentityServer.WsFederation.Configuration
             var builder = new ContainerBuilder();
 
             // mandatory from factory
-            builder.Register(ctx => factory.CoreSettings()).As<CoreSettings>();
-            builder.Register(ctx => factory.UserService()).As<IUserService>();
-            builder.Register(ctx => factory.RelyingPartyService()).As<IRelyingPartyService>();
-            
+            builder.Register(factory.CoreSettings);
+            builder.Register(factory.UserService);
+            builder.Register(factory.RelyingPartyService);
+            builder.Register(factory.WsFederationSettings);
+
             // validators
             builder.RegisterType<SignInValidator>().AsSelf();
 
@@ -48,6 +52,24 @@ namespace Thinktecture.IdentityServer.WsFederation.Configuration
             builder.RegisterApiControllers(typeof(WsFederationController).Assembly);
 
             return builder.Build();
+        }
+
+        private static void Register(this ContainerBuilder builder, Registration registration)
+        {
+            if (registration.ImplementationType != null)
+            {
+                builder.RegisterType(registration.ImplementationType).As(registration.InterfaceType);
+            }
+            else if (registration.ImplementationFactory != null)
+            {
+                builder.Register(ctx => registration.ImplementationFactory()).As(registration.InterfaceType);
+            }
+            else
+            {
+                var message = "No type or factory found on registration " + registration.GetType().FullName;
+                Logger.Error(message);
+                throw new InvalidOperationException(message);
+            }
         }
     }
 }
