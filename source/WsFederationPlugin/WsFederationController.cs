@@ -23,8 +23,8 @@ namespace Thinktecture.IdentityServer.WsFederation
 {
     [HostAuthentication("idsrv")]
     [RoutePrefix("")]
-    [NoCache]
-    [SecurityHeaders(EnableCsp=false)]
+    //[NoCache]
+    //[SecurityHeaders(EnableCsp=false)]
     public class WsFederationController : ApiController
     {
         private readonly static ILog Logger = LogProvider.GetCurrentClassLogger();
