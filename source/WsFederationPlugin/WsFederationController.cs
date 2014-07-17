@@ -11,20 +11,20 @@ using Thinktecture.IdentityServer.Core.Authentication;
 using Thinktecture.IdentityServer.Core.Configuration;
 using Thinktecture.IdentityServer.Core.Extensions;
 using Thinktecture.IdentityServer.Core.Logging;
-using Thinktecture.IdentityServer.Core.Plumbing;
 using Thinktecture.IdentityServer.Core.Services;
 using Thinktecture.IdentityServer.WsFederation.Configuration;
 using Thinktecture.IdentityServer.WsFederation.ResponseHandling;
 using Thinktecture.IdentityServer.WsFederation.Results;
 using Thinktecture.IdentityServer.WsFederation.Validation;
 using System.Net.Http;
+using Thinktecture.IdentityServer.WsFederation.Hosting;
 
 namespace Thinktecture.IdentityServer.WsFederation
 {
-    [HostAuthentication("idsrv")]
+    [HostAuthentication(Constants.PrimaryAuthenticationType)]
     [RoutePrefix("")]
-    //[NoCache]
-    //[SecurityHeaders(EnableCsp=false)]
+    [NoCache]
+    [SecurityHeaders(EnableCsp=false)]
     public class WsFederationController : ApiController
     {
         private readonly static ILog Logger = LogProvider.GetCurrentClassLogger();
@@ -34,14 +34,12 @@ namespace Thinktecture.IdentityServer.WsFederation
         private readonly SignInResponseGenerator _signInResponseGenerator;
         private readonly MetadataResponseGenerator _metadataResponseGenerator;
         private readonly ITrackingCookieService _cookies;
-        private readonly InternalConfiguration _internalConfig;
         private readonly WsFederationSettings _wsFedSettings;
         private readonly WsFederationPluginOptions _wsFedOptions;
 
-        public WsFederationController(CoreSettings settings, IUserService users, SignInValidator validator, SignInResponseGenerator signInResponseGenerator, MetadataResponseGenerator metadataResponseGenerator, ITrackingCookieService cookies, InternalConfiguration internalConfig, WsFederationSettings wsFedSettings, WsFederationPluginOptions wsFedOptions)
+        public WsFederationController(CoreSettings settings, IUserService users, SignInValidator validator, SignInResponseGenerator signInResponseGenerator, MetadataResponseGenerator metadataResponseGenerator, ITrackingCookieService cookies, WsFederationSettings wsFedSettings, WsFederationPluginOptions wsFedOptions)
         {
             _settings = settings;
-            _internalConfig = internalConfig;
             _wsFedSettings = wsFedSettings;
             _validator = validator;
             _signInResponseGenerator = signInResponseGenerator;
@@ -135,7 +133,7 @@ namespace Thinktecture.IdentityServer.WsFederation
                 message.IdP = result.HomeRealm;
             }
 
-            var url = LoginResult.GetRedirectUrl(message, this.Request.GetOwinContext().Environment, _internalConfig);
+            var url = LoginResult.GetRedirectUrl(message, this.Request.GetOwinContext().Environment, _wsFedOptions.DataProtector);
             return Redirect(url);
         }
     }
