@@ -87,7 +87,6 @@
     <Compile Include="Configuration\WebApiConfig.cs" />
     <Compile Include="Configuration\WsFederationPluginOptions.cs" />
     <Compile Include="Configuration\WsFederationServiceFactory.cs" />
-    <Compile Include="Configuration\WsFederationSettings.cs" />
     <Compile Include="Hosting\AutofacContainerMiddleware.cs" />
     <Compile Include="Hosting\AutofacScope.cs" />
     <Compile Include="Hosting\CookieMiddlewareCookieService.cs" />

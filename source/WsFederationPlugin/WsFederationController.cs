@@ -34,13 +34,11 @@ namespace Thinktecture.IdentityServer.WsFederation
         private readonly SignInResponseGenerator _signInResponseGenerator;
         private readonly MetadataResponseGenerator _metadataResponseGenerator;
         private readonly ITrackingCookieService _cookies;
-        private readonly WsFederationSettings _wsFedSettings;
         private readonly WsFederationPluginOptions _wsFedOptions;
 
-        public WsFederationController(IdentityServerOptions options, IUserService users, SignInValidator validator, SignInResponseGenerator signInResponseGenerator, MetadataResponseGenerator metadataResponseGenerator, ITrackingCookieService cookies, WsFederationSettings wsFedSettings, WsFederationPluginOptions wsFedOptions)
+        public WsFederationController(IdentityServerOptions options, IUserService users, SignInValidator validator, SignInResponseGenerator signInResponseGenerator, MetadataResponseGenerator metadataResponseGenerator, ITrackingCookieService cookies, WsFederationPluginOptions wsFedOptions)
         {
             _options = options;
-            _wsFedSettings = wsFedSettings;
             _validator = validator;
             _signInResponseGenerator = signInResponseGenerator;
             _metadataResponseGenerator = metadataResponseGenerator;
@@ -92,7 +90,7 @@ namespace Thinktecture.IdentityServer.WsFederation
         {
             Logger.Info("WS-Federation metadata request");
 
-            if (_wsFedSettings.MetadataEndpoint.IsEnabled == false)
+            if (_wsFedOptions.MetadataEndpoint.IsEnabled == false)
             {
                 Logger.Warn("Endpoint is disabled. Aborting.");
                 return NotFound();

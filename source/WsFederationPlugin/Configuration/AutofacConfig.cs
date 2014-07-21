@@ -32,7 +32,6 @@ namespace Thinktecture.IdentityServer.WsFederation.Configuration
             // mandatory from factory
             builder.Register(factory.UserService);
             builder.Register(factory.RelyingPartyService);
-            builder.Register(factory.WsFederationSettings);
 
             // validators
             builder.RegisterType<SignInValidator>().AsSelf();
