@@ -20,28 +20,7 @@ namespace Thinktecture.IdentityServer.Core.Configuration
             if (options == null) throw new ArgumentNullException("options");
             options.Validate();
 
-            //if (options.DataProtector == null)
-            //{
-            //    var provider = app.GetDataProtectionProvider();
-            //    if (provider == null)
-            //    {
-            //        provider = new DpapiDataProtectionProvider("idsrv3");
-            //    }
-
-            //    var funcProtector = new FuncDataProtector(
-            //        (data, entropy) =>
-            //        {
-            //            var protector = provider.Create(entropy);
-            //            return protector.Protect(data);
-            //        },
-            //        (data, entropy) =>
-            //        {
-            //            var protector = provider.Create(entropy);
-            //            return protector.Unprotect(data);
-            //        });
-
-            //    options.DataProtector = funcProtector;
-            //}
+            options.IdentityServerOptions.ProtocolLogoutUrls.Add(options.LogoutUrl);
 
             app.Map(options.MapPath, wsfedApp =>
                 {
@@ -49,7 +28,7 @@ namespace Thinktecture.IdentityServer.Core.Configuration
                     {
                         AuthenticationType = WsFederationPluginOptions.CookieName,
                         AuthenticationMode = AuthenticationMode.Passive,
-                        CookieName = WsFederationPluginOptions.CookieName
+                        CookieName = options.IdentityServerOptions.CookiePrefix + WsFederationPluginOptions.CookieName
                     });
 
                     wsfedApp.Use<AutofacContainerMiddleware>(AutofacConfig.Configure(options));
