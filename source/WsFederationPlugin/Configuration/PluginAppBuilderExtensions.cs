@@ -28,7 +28,7 @@ namespace Thinktecture.IdentityServer.Core.Configuration
                     {
                         AuthenticationType = WsFederationPluginOptions.CookieName,
                         AuthenticationMode = AuthenticationMode.Passive,
-                        CookieName = options.IdentityServerOptions.CookiePrefix + WsFederationPluginOptions.CookieName
+                        CookieName = options.IdentityServerOptions.CookieOptions.Prefix + WsFederationPluginOptions.CookieName,
                     });
 
                     wsfedApp.Use<AutofacContainerMiddleware>(AutofacConfig.Configure(options));
