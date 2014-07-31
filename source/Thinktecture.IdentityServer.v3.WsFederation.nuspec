@@ -21,6 +21,7 @@
 
     <dependencies>
       <dependency id="Owin" version="1.0"/>
+      <dependency id="Thinktecture.IdentityServer.v3" version="1.0.0-beta1" />
     </dependencies>
   </metadata>
 </package>
