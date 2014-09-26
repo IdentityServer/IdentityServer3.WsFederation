@@ -115,6 +115,9 @@
     <Compile Include="WsFederationController.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\default.licenseheader">
+      <Link>default.licenseheader</Link>
+    </None>
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>

@@ -1,4 +1,5 @@
-﻿/*
+extensions: .cs
+/*
  * Copyright 2014 Dominick Baier, Brock Allen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,14 +14,3 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-using System.Threading.Tasks;
-using Thinktecture.IdentityServer.WsFederation.Models;
-
-namespace Thinktecture.IdentityServer.WsFederation.Services
-{
-    public interface IRelyingPartyService
-    {
-        Task<RelyingParty> GetByRealmAsync(string realm);
-    }
-}
