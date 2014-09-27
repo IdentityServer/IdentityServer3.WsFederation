@@ -78,7 +78,7 @@ namespace Thinktecture.IdentityServer.WsFederation.ResponseHandling
         private async Task<ClaimsIdentity> CreateSubjectAsync(SignInValidationResult validationResult)
         {
             var claims = await _users.GetProfileDataAsync(
-                validationResult.Subject.GetSubjectId(), 
+                validationResult.Subject, 
                 validationResult.RelyingParty.ClaimMappings.Keys);
 
             var mappedClaims = new List<Claim>();
