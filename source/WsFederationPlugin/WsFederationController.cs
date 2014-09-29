@@ -143,7 +143,7 @@ namespace Thinktecture.IdentityServer.WsFederation
                 message.IdP = result.HomeRealm;
             }
 
-            var url = LoginResult.GetRedirectUrl(message, this.Request.GetOwinContext().Environment, _wsFedOptions.DataProtector);
+            var url = LoginResult.GetRedirectUrl(message, this.Request.GetOwinContext().Environment, _options);
             return Redirect(url);
         }
     }
