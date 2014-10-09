@@ -56,7 +56,7 @@ namespace Thinktecture.IdentityServer.WsFederation.Validation
 
             if (rp == null || rp.Enabled == false)
             {
-                Logger.Error("Relying party not found: " + rp.Realm);
+                Logger.Error("Relying party not found: " + message.Realm);
 
                 return new SignInValidationResult
                 {
