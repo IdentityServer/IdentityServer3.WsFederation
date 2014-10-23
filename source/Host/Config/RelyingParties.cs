@@ -31,7 +31,7 @@ namespace Host.Config
                     Realm = "urn:owinrp",
                     Enabled = true,
                     ReplyUrl = "http://localhost:10313/",
-                    TokenType = Thinktecture.IdentityModel.Constants.TokenTypes.Saml2TokenProfile11,
+                    TokenType = Thinktecture.IdentityModel.Constants.TokenTypes.JsonWebToken,
                     TokenLifeTime = 1,
 
                     ClaimMappings = new Dictionary<string, string>
