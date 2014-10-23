@@ -66,11 +66,14 @@ namespace Thinktecture.IdentityServer.WsFederation.ResponseHandling
                 new WSTrust13RequestSerializer(),
                 new WSTrust13ResponseSerializer());
 
+            var mgr = SecurityTokenHandlerCollectionManager.CreateEmptySecurityTokenHandlerCollectionManager();
+            mgr[SecurityTokenHandlerCollectionManager.Usage.Default] = CreateSupportedSecurityTokenHandler();
+            
             var responseMessage = new SignInResponseMessage(
                 new Uri(validationResult.ReplyUrl),
                 rstr,
                 serializer,
-                new WSTrustSerializationContext());
+                new WSTrustSerializationContext(mgr));
 
             return responseMessage;
         }
