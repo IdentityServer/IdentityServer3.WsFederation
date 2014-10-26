@@ -22,7 +22,7 @@ using System.Web.Http.Hosting;
 
 namespace Thinktecture.IdentityServer.WsFederation.Hosting
 {
-    public class KatanaDependencyResolver : DelegatingHandler
+    internal class KatanaDependencyResolver : DelegatingHandler
     {
         protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {

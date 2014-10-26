@@ -22,7 +22,7 @@ using System.Web.Http.Dependencies;
 
 namespace Thinktecture.IdentityServer.WsFederation.Hosting
 {
-    public class AutofacScope : IDependencyScope
+    internal class AutofacScope : IDependencyScope
     {
         ILifetimeScope scope;
 

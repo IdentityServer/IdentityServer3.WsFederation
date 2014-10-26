@@ -19,7 +19,6 @@ using Autofac.Integration.WebApi;
 using System;
 using Thinktecture.IdentityServer.Core.Configuration;
 using Thinktecture.IdentityServer.Core.Logging;
-using Thinktecture.IdentityServer.Core.Services;
 using Thinktecture.IdentityServer.WsFederation.Hosting;
 using Thinktecture.IdentityServer.WsFederation.ResponseHandling;
 using Thinktecture.IdentityServer.WsFederation.Services;

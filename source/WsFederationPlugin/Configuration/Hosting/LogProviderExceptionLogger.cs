@@ -21,7 +21,7 @@ using Thinktecture.IdentityServer.Core.Logging;
 
 namespace Thinktecture.IdentityServer.WsFederation.Hosting
 {
-    public class LogProviderExceptionLogger : IExceptionLogger
+    internal class LogProviderExceptionLogger : IExceptionLogger
     {
         private readonly static ILog Logger = LogProvider.GetCurrentClassLogger();
 

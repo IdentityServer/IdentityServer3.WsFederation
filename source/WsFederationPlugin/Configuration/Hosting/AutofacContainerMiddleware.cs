@@ -22,7 +22,7 @@ using System.Threading.Tasks;
 
 namespace Thinktecture.IdentityServer.WsFederation.Hosting
 {
-    public class AutofacContainerMiddleware
+    internal class AutofacContainerMiddleware
     {
         readonly private Func<IDictionary<string, object>, Task> _next;
         readonly private IContainer _container;

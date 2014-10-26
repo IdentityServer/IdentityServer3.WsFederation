@@ -14,12 +14,7 @@
  * limitations under the License.
  */
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web.Http.Filters;
-using Thinktecture.IdentityServer.Core;
 
 namespace Thinktecture.IdentityServer.WsFederation.Hosting
 {

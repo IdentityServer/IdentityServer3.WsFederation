@@ -17,10 +17,9 @@
 using System.IdentityModel.Services;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Thinktecture.IdentityServer.Core;
+using Thinktecture.IdentityServer.Core.Extensions;
 using Thinktecture.IdentityServer.Core.Logging;
 using Thinktecture.IdentityServer.WsFederation.Services;
-using Thinktecture.IdentityServer.Core.Extensions;
 
 namespace Thinktecture.IdentityServer.WsFederation.Validation
 {

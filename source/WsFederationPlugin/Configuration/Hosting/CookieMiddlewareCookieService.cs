@@ -20,11 +20,11 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Thinktecture.IdentityServer.Core.Logging;
-using Thinktecture.IdentityServer.Core.Services;
+using Thinktecture.IdentityServer.WsFederation.Services;
 
 namespace Thinktecture.IdentityServer.WsFederation.Hosting
 {
-    public class CookieMiddlewareTrackingCookieService : ITrackingCookieService
+    internal class CookieMiddlewareTrackingCookieService : ITrackingCookieService
     {
         private readonly static ILog Logger = LogProvider.GetCurrentClassLogger();
         private readonly IOwinContext _context;

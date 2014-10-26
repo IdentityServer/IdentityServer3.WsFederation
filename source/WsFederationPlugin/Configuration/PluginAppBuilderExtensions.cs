@@ -16,7 +16,6 @@
 
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
-using Microsoft.Owin.Security.DataProtection;
 using Owin;
 using System;
 using Thinktecture.IdentityServer.WsFederation.Configuration;
