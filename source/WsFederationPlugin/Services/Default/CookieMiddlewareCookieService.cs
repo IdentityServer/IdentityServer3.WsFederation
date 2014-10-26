@@ -22,9 +22,9 @@ using System.Threading.Tasks;
 using Thinktecture.IdentityServer.Core.Logging;
 using Thinktecture.IdentityServer.WsFederation.Services;
 
-namespace Thinktecture.IdentityServer.WsFederation.Hosting
+namespace Thinktecture.IdentityServer.WsFederation.Services.Default
 {
-    internal class CookieMiddlewareTrackingCookieService : ITrackingCookieService
+    public class CookieMiddlewareTrackingCookieService : ITrackingCookieService
     {
         private readonly static ILog Logger = LogProvider.GetCurrentClassLogger();
         private readonly IOwinContext _context;

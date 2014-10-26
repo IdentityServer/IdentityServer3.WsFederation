@@ -17,6 +17,7 @@ namespace Host
                 {
                     await next();
                 });
+                
                 var factory = InMemoryFactory.Create(
                     users: Users.Get(),
                     clients: Clients.Get(),
@@ -26,12 +27,10 @@ namespace Host
                 {
                     IssuerUri = "https://idsrv3.com",
                     SiteName = "Thinktecture IdentityServer v3",
-                    RequireSsl = false,
 
                     SigningCertificate = Certificate.Get(),
                     Factory = factory,
                     PluginConfiguration = ConfigurePlugins,
-                    AccessTokenValidationEndpoint = EndpointSettings.Enabled
                 };
 
                 coreApp.UseIdentityServer(options);
