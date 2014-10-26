@@ -1,5 +1,5 @@
-﻿using Owin;
-using Host.Config;
+﻿using Host.Config;
+using Owin;
 using Thinktecture.IdentityServer.Core.Configuration;
 using Thinktecture.IdentityServer.Host.Config;
 using Thinktecture.IdentityServer.WsFederation.Configuration;

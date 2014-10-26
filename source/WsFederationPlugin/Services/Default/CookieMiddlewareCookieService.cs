@@ -20,7 +20,6 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Thinktecture.IdentityServer.Core.Logging;
-using Thinktecture.IdentityServer.WsFederation.Services;
 
 namespace Thinktecture.IdentityServer.WsFederation.Services.Default
 {
