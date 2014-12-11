@@ -9,6 +9,8 @@ if(Test-Path Env:\APPVEYOR_BUILD_NUMBER) {
 	Write-Host "Using APPVEYOR_BUILD_NUMBER"
 }
 
+.\source\.nuget\nuget.exe config -ConfigFile nuget.config
+
 gci .\source -Recurse "packages.config" |% {
 	"Restoring " + $_.FullName
 	.\source\.nuget\nuget.exe i $_.FullName -o .\source\packages
