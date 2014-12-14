@@ -58,6 +58,12 @@ namespace Thinktecture.IdentityServer.WsFederation.Configuration
             // load core controller
             builder.RegisterApiControllers(typeof(WsFederationController).Assembly);
 
+            // register additional dependencies from identity server
+            foreach (var registration in options.IdentityServerOptions.Factory.Registrations)
+            {
+                builder.Register(registration);
+            }
+
             // add any additional dependencies from hosting application
             foreach (var registration in factory.Registrations)
             {
