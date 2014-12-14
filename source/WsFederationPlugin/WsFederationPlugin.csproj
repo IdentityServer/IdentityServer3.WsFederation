@@ -94,6 +94,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration\Hosting\AutofacConfig.cs" />
+    <Compile Include="Configuration\Hosting\AutofacDependencyResolver.cs" />
     <Compile Include="Configuration\PluginAppBuilderExtensions.cs" />
     <Compile Include="Configuration\Hosting\WebApiConfig.cs" />
     <Compile Include="Configuration\WsFederationPluginOptions.cs" />

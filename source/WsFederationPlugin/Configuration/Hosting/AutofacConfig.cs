@@ -19,6 +19,7 @@ using Autofac.Integration.WebApi;
 using System;
 using Thinktecture.IdentityServer.Core.Configuration;
 using Thinktecture.IdentityServer.Core.Logging;
+using Thinktecture.IdentityServer.v3.WsFederation.Configuration.Hosting;
 using Thinktecture.IdentityServer.WsFederation.ResponseHandling;
 using Thinktecture.IdentityServer.WsFederation.Services;
 using Thinktecture.IdentityServer.WsFederation.Services.Default;
@@ -89,7 +90,7 @@ namespace Thinktecture.IdentityServer.WsFederation.Configuration
             }
             else if (registration.ImplementationFactory != null)
             {
-                var reg = builder.Register(ctx => registration.ImplementationFactory());
+                var reg = builder.Register(ctx => registration.ImplementationFactory(new AutofacDependencyResolver(ctx)));
                 if (name != null)
                 {
                     reg.Named(name, registration.InterfaceType);
