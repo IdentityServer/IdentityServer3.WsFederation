@@ -27,7 +27,7 @@ namespace Thinktecture.IdentityServer.WsFederation.Hosting
         protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
             var owin = request.GetOwinContext();
-            var scope = owin.Get<ILifetimeScope>("idsrv:AutofacScope");
+            var scope = owin.Get<ILifetimeScope>("idsrv:WsFedAutofacScope");
             if (scope != null)
             {
                 request.Properties[HttpPropertyKeys.DependencyScope] = new AutofacScope(scope);

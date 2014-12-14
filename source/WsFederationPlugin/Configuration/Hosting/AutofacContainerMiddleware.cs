@@ -45,7 +45,7 @@ namespace Thinktecture.IdentityServer.WsFederation.Hosting
             }))
             {
                 // this makes scope available for downstream frameworks
-                context.Set<ILifetimeScope>("idsrv:AutofacScope", scope);
+                context.Set<ILifetimeScope>("idsrv:WsFedAutofacScope", scope);
                 await _next(env);
             }
         }
