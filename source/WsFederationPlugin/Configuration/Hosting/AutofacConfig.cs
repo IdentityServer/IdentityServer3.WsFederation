@@ -58,18 +58,40 @@ namespace Thinktecture.IdentityServer.WsFederation.Configuration
             // load core controller
             builder.RegisterApiControllers(typeof(WsFederationController).Assembly);
 
+            // add any additional dependencies from hosting application
+            foreach (var registration in factory.Registrations)
+            {
+                builder.Register(registration);
+            }
+
             return builder.Build();
         }
 
-        private static void Register(this ContainerBuilder builder, Registration registration)
+        private static void Register(this ContainerBuilder builder, Registration registration, string name = null)
         {
             if (registration.ImplementationType != null)
             {
-                builder.RegisterType(registration.ImplementationType).As(registration.InterfaceType);
+                var reg = builder.RegisterType(registration.ImplementationType);
+                if (name != null)
+                {
+                    reg.Named(name, registration.InterfaceType);
+                }
+                else
+                {
+                    reg.As(registration.InterfaceType);
+                }
             }
             else if (registration.ImplementationFactory != null)
             {
-                builder.Register(ctx => registration.ImplementationFactory()).As(registration.InterfaceType);
+                var reg = builder.Register(ctx => registration.ImplementationFactory());
+                if (name != null)
+                {
+                    reg.Named(name, registration.InterfaceType);
+                }
+                else
+                {
+                    reg.As(registration.InterfaceType);
+                }
             }
             else
             {

@@ -1,8 +1,11 @@
 ﻿using Host.Config;
 using Owin;
+using System.Collections.Generic;
 using Thinktecture.IdentityServer.Core.Configuration;
+using Thinktecture.IdentityServer.Core.Services.InMemory;
 using Thinktecture.IdentityServer.Host.Config;
 using Thinktecture.IdentityServer.WsFederation.Configuration;
+using Thinktecture.IdentityServer.WsFederation.Models;
 using Thinktecture.IdentityServer.WsFederation.Services;
 
 namespace Host
@@ -19,9 +22,9 @@ namespace Host
                 });
                 
                 var factory = InMemoryFactory.Create(
-                    users: Users.Get(),
+                    users:   Users.Get(),
                     clients: Clients.Get(),
-                    scopes: Scopes.Get());
+                    scopes:  Scopes.Get());
 
                 var options = new IdentityServerOptions
                 {
@@ -39,14 +42,20 @@ namespace Host
 
         private void ConfigurePlugins(IAppBuilder pluginApp, IdentityServerOptions options)
         {
+            var factory = new WsFederationServiceFactory
+            {
+                UserService = options.Factory.UserService,
+                RelyingPartyService = Registration.RegisterType<IRelyingPartyService>(typeof(InMemoryRelyingPartyService))
+            };
+
+            // data sources for in-memory services
+            factory.Register(Registration.RegisterSingleton<List<InMemoryUser>>(Users.Get()));
+            factory.Register(Registration.RegisterSingleton<IEnumerable<RelyingParty>>(RelyingParties.Get()));
+
             var wsFedOptions = new WsFederationPluginOptions
             {
                 IdentityServerOptions = options,
-                Factory = new WsFederationServiceFactory
-                {
-                    UserService = options.Factory.UserService,
-                    RelyingPartyService = Registration.RegisterFactory<IRelyingPartyService>(() => new InMemoryRelyingPartyService(RelyingParties.Get())),
-                }
+                Factory = factory
             };
 
             pluginApp.UseWsFederationPlugin(wsFedOptions);

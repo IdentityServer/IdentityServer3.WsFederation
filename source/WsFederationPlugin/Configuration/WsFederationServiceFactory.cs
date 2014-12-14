@@ -15,6 +15,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 using Thinktecture.IdentityServer.Core.Configuration;
 using Thinktecture.IdentityServer.Core.Logging;
 using Thinktecture.IdentityServer.Core.Services;
@@ -25,6 +26,37 @@ namespace Thinktecture.IdentityServer.WsFederation.Configuration
     public class WsFederationServiceFactory
     {
         private static ILog Logger = LogProvider.GetCurrentClassLogger();
+
+        // keep list of any additional dependencies the 
+        // hosting application might need. these will be
+        // added to the DI container
+        readonly List<Registration> _registrations = new List<Registration>();
+
+        /// <summary>
+        /// Gets the a list of additional dependencies.
+        /// </summary>
+        /// <value>
+        /// The dependencies.
+        /// </value>
+        public IEnumerable<Registration> Registrations
+        {
+            get { return _registrations; }
+        }
+
+        /// <summary>
+        /// Adds a registration to the dependency list
+        /// </summary>
+        /// <typeparam name="T">Type of the dependency</typeparam>
+        /// <param name="registration">The registration.</param>
+        public void Register<T>(Registration<T> registration)
+            where T : class
+        {
+            _registrations.Add(registration);
+        }
+
+        ///////////////////////
+        // mandatory (external)
+        ///////////////////////
 
         // mandatory (external)
         public Registration<IUserService> UserService { get; set; }
