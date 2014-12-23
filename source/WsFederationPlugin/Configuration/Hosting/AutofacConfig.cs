@@ -68,7 +68,7 @@ namespace Thinktecture.IdentityServer.WsFederation.Configuration
             // add any additional dependencies from hosting application
             foreach (var registration in factory.Registrations)
             {
-                builder.Register(registration);
+                builder.Register(registration, registration.Name);
             }
 
             return builder.Build();
@@ -76,9 +76,9 @@ namespace Thinktecture.IdentityServer.WsFederation.Configuration
 
         private static void Register(this ContainerBuilder builder, Registration registration, string name = null)
         {
-            if (registration.ImplementationType != null)
+            if (registration.Instance != null)
             {
-                var reg = builder.RegisterType(registration.ImplementationType);
+                var reg = builder.Register(ctx => registration.Instance).SingleInstance();
                 if (name != null)
                 {
                     reg.Named(name, registration.InterfaceType);
@@ -88,9 +88,21 @@ namespace Thinktecture.IdentityServer.WsFederation.Configuration
                     reg.As(registration.InterfaceType);
                 }
             }
-            else if (registration.ImplementationFactory != null)
+            else if (registration.Type != null)
             {
-                var reg = builder.Register(ctx => registration.ImplementationFactory(new AutofacDependencyResolver(ctx)));
+                var reg = builder.RegisterType(registration.Type);
+                if (name != null)
+                {
+                    reg.Named(name, registration.InterfaceType);
+                }
+                else
+                {
+                    reg.As(registration.InterfaceType);
+                }
+            }
+            else if (registration.Factory != null)
+            {
+                var reg = builder.Register(ctx => registration.Factory(new AutofacDependencyResolver(ctx)));
                 if (name != null)
                 {
                     reg.Named(name, registration.InterfaceType);
