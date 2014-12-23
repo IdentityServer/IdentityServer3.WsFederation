@@ -25,14 +25,19 @@ namespace Thinktecture.IdentityServer.v3.WsFederation.Configuration.Hosting
 {
     class AutofacDependencyResolver : IDependencyResolver
     {
-        IComponentContext ctx;
+        readonly IComponentContext ctx;
         public AutofacDependencyResolver(IComponentContext ctx)
         {
             this.ctx = ctx;
         }
-
-        public T Resolve<T>()
+        
+        public T Resolve<T>(string name)
         {
+            if (name != null)
+            {
+                return ctx.ResolveNamed<T>(name);
+            }
+
             return ctx.Resolve<T>();
         }
     }

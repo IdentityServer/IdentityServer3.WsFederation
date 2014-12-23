@@ -45,11 +45,11 @@ namespace Host
             var factory = new WsFederationServiceFactory
             {
                 UserService = options.Factory.UserService,
-                RelyingPartyService = Registration.RegisterType<IRelyingPartyService>(typeof(InMemoryRelyingPartyService))
+                RelyingPartyService = new Registration<IRelyingPartyService>(typeof(InMemoryRelyingPartyService))
             };
 
             // data sources for in-memory services
-            factory.Register(Registration.RegisterSingleton<IEnumerable<RelyingParty>>(RelyingParties.Get()));
+            factory.Register(new Registration<IEnumerable<RelyingParty>>(RelyingParties.Get()));
 
             var wsFedOptions = new WsFederationPluginOptions
             {
