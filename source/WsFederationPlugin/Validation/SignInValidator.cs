@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+using System;
 using System.IdentityModel.Services;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -38,7 +39,7 @@ namespace Thinktecture.IdentityServer.WsFederation.Validation
             Logger.Info("Validating WS-Federation signin request");
             var result = new SignInValidationResult();
 
-            if (message.HomeRealm.IsPresent())
+            if (!String.IsNullOrWhiteSpace(message.HomeRealm))
             {
                 Logger.Info("Setting home realm to: " + message.HomeRealm);
                 result.HomeRealm = message.HomeRealm;

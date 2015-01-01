@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+using System;
 using System.IdentityModel.Services;
 using System.Net.Http;
 using System.Security.Claims;
@@ -140,12 +141,14 @@ namespace Thinktecture.IdentityServer.WsFederation
             var message = new SignInMessage();
             message.ReturnUrl = Request.RequestUri.AbsoluteUri;
 
-            if (result.HomeRealm.IsPresent())
+            if (!String.IsNullOrWhiteSpace(result.HomeRealm))
             {
                 message.IdP = result.HomeRealm;
             }
-
-            var url = LoginResult.GetRedirectUrl(message, this.Request.GetOwinContext().Environment, _options);
+            
+            var env = Request.GetOwinEnvironment();
+            var url = env.CreateSignInRequest(message);
+            
             return Redirect(url);
         }
     }
