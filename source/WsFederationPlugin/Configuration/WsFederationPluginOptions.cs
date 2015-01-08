@@ -32,7 +32,7 @@ namespace Thinktecture.IdentityServer.WsFederation.Configuration
         
         public IdentityServerOptions IdentityServerOptions { get; set; }
         public WsFederationServiceFactory Factory { get; set; }
-        public EndpointSettings MetadataEndpoint { get; set; }
+        public bool EnableMetadataEndpoint { get; set; }
         
         public IDataProtector DataProtector
         {
@@ -47,7 +47,7 @@ namespace Thinktecture.IdentityServer.WsFederation.Configuration
         public WsFederationPluginOptions()
         {
             MapPath = "/wsfed";
-            MetadataEndpoint = EndpointSettings.Enabled;
+            EnableMetadataEndpoint = true;
         }
 
         public void Validate()

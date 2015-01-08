@@ -105,7 +105,7 @@ namespace Thinktecture.IdentityServer.WsFederation
         {
             Logger.Info("WS-Federation metadata request");
 
-            if (_wsFedOptions.MetadataEndpoint.IsEnabled == false)
+            if (_wsFedOptions.EnableMetadataEndpoint == false)
             {
                 Logger.Warn("Endpoint is disabled. Aborting.");
                 return NotFound();
