@@ -23,7 +23,7 @@ using Thinktecture.IdentityServer.Core.Services;
 
 namespace Thinktecture.IdentityServer.v3.WsFederation.Configuration.Hosting
 {
-    class AutofacDependencyResolver : IDependencyResolver
+    internal class AutofacDependencyResolver : IDependencyResolver
     {
         readonly IComponentContext ctx;
         public AutofacDependencyResolver(IComponentContext ctx)

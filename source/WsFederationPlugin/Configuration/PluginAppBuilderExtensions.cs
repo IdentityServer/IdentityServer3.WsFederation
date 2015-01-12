@@ -23,8 +23,18 @@ using Thinktecture.IdentityServer.WsFederation.Hosting;
 
 namespace Thinktecture.IdentityServer.Core.Configuration
 {
+    /// <summary>
+    /// Extension methods for IAppBuilder to configure the WS-Federation plugin
+    /// </summary>
     public static class PluginAppBuilderExtensions
     {
+        /// <summary>
+        /// Add the WS-Federation plugin to the IdentityServer pipeline.
+        /// </summary>
+        /// <param name="app">The appBuilder.</param>
+        /// <param name="options">The options.</param>
+        /// <returns>The appBuilder</returns>
+        /// <exception cref="System.ArgumentNullException">options</exception>
         public static IAppBuilder UseWsFederationPlugin(this IAppBuilder app, WsFederationPluginOptions options)
         {
             if (options == null) throw new ArgumentNullException("options");

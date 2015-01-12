@@ -19,6 +19,9 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace Thinktecture.IdentityServer.WsFederation.Models
 {
+    /// <summary>
+    /// Models a WS-Federation relying party
+    /// </summary>
     public class RelyingParty
     {
         /// <summary>
@@ -62,7 +65,7 @@ namespace Thinktecture.IdentityServer.WsFederation.Models
         public string TokenType { get; set; }
 
         /// <summary>
-        /// Gets or sets the token life time.
+        /// Gets or sets the token life time in hours.
         /// </summary>
         /// <value>
         /// The token life time.
@@ -100,5 +103,15 @@ namespace Thinktecture.IdentityServer.WsFederation.Models
         /// The claim mappings.
         /// </value>
         public Dictionary<string, string> ClaimMappings { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RelyingParty"/> class.
+        /// </summary>
+        public RelyingParty()
+        {
+            ClaimMappings = new Dictionary<string, string>();
+            TokenType = Thinktecture.IdentityModel.Constants.TokenTypes.Saml2TokenProfile11;
+            TokenLifeTime = 8;
+        }
     }
 }
