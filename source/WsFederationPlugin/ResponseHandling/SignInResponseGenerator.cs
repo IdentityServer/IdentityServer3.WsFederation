@@ -16,9 +16,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IdentityModel.Protocols.WSTrust;
 using System.IdentityModel.Services;
 using System.IdentityModel.Tokens;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Thinktecture.IdentityModel;
@@ -29,8 +31,11 @@ using Thinktecture.IdentityServer.Core.Logging;
 using Thinktecture.IdentityServer.Core.Services;
 using Thinktecture.IdentityServer.WsFederation.Validation;
 
+#pragma warning disable 1591
+
 namespace Thinktecture.IdentityServer.WsFederation.ResponseHandling
 {
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public class SignInResponseGenerator
     {
         private readonly static ILog Logger = LogProvider.GetCurrentClassLogger();
@@ -80,18 +85,56 @@ namespace Thinktecture.IdentityServer.WsFederation.ResponseHandling
 
         private async Task<ClaimsIdentity> CreateSubjectAsync(SignInValidationResult validationResult)
         {
-            var claims = await _users.GetProfileDataAsync(
-                validationResult.Subject, 
-                validationResult.RelyingParty.ClaimMappings.Keys);
-
+            var profileClaims = new List<Claim>();
             var mappedClaims = new List<Claim>();
 
-            foreach (var claim in claims)
+            // get all claims from user service
+            if (validationResult.RelyingParty.IncludeAllClaimsForUser)
+            {
+                var claims = await _users.GetProfileDataAsync(
+                    validationResult.Subject);
+
+                profileClaims = claims.ToList();
+            }
+            else
+            {
+                // get only claims that are explicitly mapped (if any)
+                var claimTypes = validationResult.RelyingParty.ClaimMappings.Keys;
+
+                if (claimTypes.Any())
+                {
+                    var claims = await _users.GetProfileDataAsync(
+                        validationResult.Subject,
+                        claimTypes);
+
+                    profileClaims = claims.ToList();
+                }
+            }
+            
+            foreach (var claim in profileClaims)
             {
                 string mappedType;
+
+                // if an explicit mapping exists, use it
                 if (validationResult.RelyingParty.ClaimMappings.TryGetValue(claim.Type, out mappedType))
                 {
                     mappedClaims.Add(new Claim(mappedType, claim.Value));
+                }
+                else
+                {
+                    // otherwise pass-through the claims if flag is set
+                    if (validationResult.RelyingParty.IncludeAllClaimsForUser)
+                    {
+                        string newType = claim.Type;
+
+                        // if prefix is configured, prefix the claim type
+                        if (!string.IsNullOrWhiteSpace(validationResult.RelyingParty.DefaultClaimTypeMappingPrefix))
+                        {
+                            newType = validationResult.RelyingParty.DefaultClaimTypeMappingPrefix + newType;
+                        }
+
+                        mappedClaims.Add(new Claim(newType, claim.Value));
+                    }
                 }
             }
 

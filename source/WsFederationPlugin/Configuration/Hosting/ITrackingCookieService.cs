@@ -15,10 +15,14 @@
  */
 
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Threading.Tasks;
 
-namespace Thinktecture.IdentityServer.WsFederation.Services
+#pragma warning disable 1591
+
+namespace Thinktecture.IdentityServer.WsFederation.Hosting
 {
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public interface ITrackingCookieService
     {
         Task AddValueAsync(string name, string value);

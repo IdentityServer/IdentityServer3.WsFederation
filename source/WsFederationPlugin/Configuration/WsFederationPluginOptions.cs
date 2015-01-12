@@ -18,10 +18,22 @@ using Thinktecture.IdentityServer.Core.Configuration;
 
 namespace Thinktecture.IdentityServer.WsFederation.Configuration
 {
+    /// <summary>
+    /// WS-Federation plugin options
+    /// </summary>
     public class WsFederationPluginOptions
     {
+        /// <summary>
+        /// The tracking cookie name
+        /// </summary>
         public const string CookieName = "IdSvr.WsFedTracking";
 
+        /// <summary>
+        /// Gets the logout URL.
+        /// </summary>
+        /// <value>
+        /// The logout URL.
+        /// </value>
         public string LogoutUrl
         {
             get
@@ -29,11 +41,37 @@ namespace Thinktecture.IdentityServer.WsFederation.Configuration
                 return MapPath + "/signout";
             }
         }
-        
+
+        /// <summary>
+        /// Gets or sets the identity server options.
+        /// </summary>
+        /// <value>
+        /// The identity server options.
+        /// </value>
         public IdentityServerOptions IdentityServerOptions { get; set; }
+
+        /// <summary>
+        /// Gets or sets the WS-Federation service factory.
+        /// </summary>
+        /// <value>
+        /// The factory.
+        /// </value>
         public WsFederationServiceFactory Factory { get; set; }
-        public EndpointSettings MetadataEndpoint { get; set; }
-        
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the metadata endpoint is enabled.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if the metadata endpoint is enabled; otherwise, <c>false</c>.
+        /// </value>
+        public bool EnableMetadataEndpoint { get; set; }
+
+        /// <summary>
+        /// Gets the data protector.
+        /// </summary>
+        /// <value>
+        /// The data protector.
+        /// </value>
         public IDataProtector DataProtector
         {
             get
@@ -42,14 +80,33 @@ namespace Thinktecture.IdentityServer.WsFederation.Configuration
             }
         }
 
+        /// <summary>
+        /// Gets or sets the map path.
+        /// </summary>
+        /// <value>
+        /// The map path.
+        /// </value>
         public string MapPath { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WsFederationPluginOptions"/> class.
+        /// </summary>
         public WsFederationPluginOptions()
         {
             MapPath = "/wsfed";
-            MetadataEndpoint = EndpointSettings.Enabled;
+            EnableMetadataEndpoint = true;
         }
 
+        /// <summary>
+        /// Validates this instance.
+        /// </summary>
+        /// <exception cref="System.ArgumentNullException">
+        /// Factory not configured
+        /// or
+        /// DataProtector not configured
+        /// or
+        /// Options not configured
+        /// </exception>
         public void Validate()
         {
             if (Factory == null)

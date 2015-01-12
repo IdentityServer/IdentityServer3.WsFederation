@@ -14,15 +14,19 @@
  * limitations under the License.
  */
 
+using System;
+using System.ComponentModel;
 using System.IdentityModel.Services;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Thinktecture.IdentityServer.Core.Extensions;
 using Thinktecture.IdentityServer.Core.Logging;
 using Thinktecture.IdentityServer.WsFederation.Services;
 
+#pragma warning disable 1591
+
 namespace Thinktecture.IdentityServer.WsFederation.Validation
 {
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public class SignInValidator
     {
         private readonly static ILog Logger = LogProvider.GetCurrentClassLogger();
@@ -38,7 +42,7 @@ namespace Thinktecture.IdentityServer.WsFederation.Validation
             Logger.Info("Validating WS-Federation signin request");
             var result = new SignInValidationResult();
 
-            if (message.HomeRealm.IsPresent())
+            if (!String.IsNullOrWhiteSpace(message.HomeRealm))
             {
                 Logger.Info("Setting home realm to: " + message.HomeRealm);
                 result.HomeRealm = message.HomeRealm;
@@ -49,7 +53,7 @@ namespace Thinktecture.IdentityServer.WsFederation.Validation
             {
                 result.IsSignInRequired = true;
                 return result;
-            };
+            }
 
             var rp = await _relyingParties.GetByRealmAsync(message.Realm);
 

@@ -19,8 +19,16 @@ using Thinktecture.IdentityServer.WsFederation.Models;
 
 namespace Thinktecture.IdentityServer.WsFederation.Services
 {
+    /// <summary>
+    /// Implements retrieval of relying party configuration
+    /// </summary>
     public interface IRelyingPartyService
     {
+        /// <summary>
+        /// Retrieves a relying party by realm.
+        /// </summary>
+        /// <param name="realm">The realm.</param>
+        /// <returns>The relying party</returns>
         Task<RelyingParty> GetByRealmAsync(string realm);
     }
 }

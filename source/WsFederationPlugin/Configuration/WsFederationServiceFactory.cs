@@ -23,9 +23,12 @@ using Thinktecture.IdentityServer.WsFederation.Services;
 
 namespace Thinktecture.IdentityServer.WsFederation.Configuration
 {
+    /// <summary>
+    /// The WS-Federation plugin service factory
+    /// </summary>
     public class WsFederationServiceFactory
     {
-        private static ILog Logger = LogProvider.GetCurrentClassLogger();
+        private static readonly ILog Logger = LogProvider.GetCurrentClassLogger();
 
         // keep list of any additional dependencies the 
         // hosting application might need. these will be
@@ -59,9 +62,25 @@ namespace Thinktecture.IdentityServer.WsFederation.Configuration
         ///////////////////////
 
         // mandatory (external)
+        /// <summary>
+        /// Gets or sets the user service.
+        /// </summary>
+        /// <value>
+        /// The user service.
+        /// </value>
         public Registration<IUserService> UserService { get; set; }
+
+        /// <summary>
+        /// Gets or sets the relying party service.
+        /// </summary>
+        /// <value>
+        /// The relying party service.
+        /// </value>
         public Registration<IRelyingPartyService> RelyingPartyService { get; set; }
 
+        /// <summary>
+        /// Validates this instance.
+        /// </summary>
         public void Validate()
         {
             if (UserService == null) LogAndStop("UserService not configured");

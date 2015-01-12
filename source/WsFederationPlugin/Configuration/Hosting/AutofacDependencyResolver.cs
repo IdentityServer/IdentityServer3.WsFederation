@@ -14,16 +14,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Thinktecture.IdentityServer.Core.Services;
 
 namespace Thinktecture.IdentityServer.v3.WsFederation.Configuration.Hosting
 {
-    class AutofacDependencyResolver : IDependencyResolver
+    internal class AutofacDependencyResolver : IDependencyResolver
     {
         readonly IComponentContext ctx;
         public AutofacDependencyResolver(IComponentContext ctx)

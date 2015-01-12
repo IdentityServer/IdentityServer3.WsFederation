@@ -20,16 +20,15 @@ using System;
 using Thinktecture.IdentityServer.Core.Configuration;
 using Thinktecture.IdentityServer.Core.Logging;
 using Thinktecture.IdentityServer.v3.WsFederation.Configuration.Hosting;
+using Thinktecture.IdentityServer.WsFederation.Hosting;
 using Thinktecture.IdentityServer.WsFederation.ResponseHandling;
-using Thinktecture.IdentityServer.WsFederation.Services;
-using Thinktecture.IdentityServer.WsFederation.Services.Default;
 using Thinktecture.IdentityServer.WsFederation.Validation;
 
 namespace Thinktecture.IdentityServer.WsFederation.Configuration
 {
     internal static class AutofacConfig
     {
-        static ILog Logger = LogProvider.GetCurrentClassLogger();
+        static readonly ILog Logger = LogProvider.GetCurrentClassLogger();
 
         public static IContainer Configure(WsFederationPluginOptions options)
         {
@@ -81,11 +80,11 @@ namespace Thinktecture.IdentityServer.WsFederation.Configuration
                 var reg = builder.Register(ctx => registration.Instance).SingleInstance();
                 if (name != null)
                 {
-                    reg.Named(name, registration.InterfaceType);
+                    reg.Named(name, registration.DependencyType);
                 }
                 else
                 {
-                    reg.As(registration.InterfaceType);
+                    reg.As(registration.DependencyType);
                 }
             }
             else if (registration.Type != null)
@@ -93,11 +92,11 @@ namespace Thinktecture.IdentityServer.WsFederation.Configuration
                 var reg = builder.RegisterType(registration.Type);
                 if (name != null)
                 {
-                    reg.Named(name, registration.InterfaceType);
+                    reg.Named(name, registration.DependencyType);
                 }
                 else
                 {
-                    reg.As(registration.InterfaceType);
+                    reg.As(registration.DependencyType);
                 }
             }
             else if (registration.Factory != null)
@@ -105,11 +104,11 @@ namespace Thinktecture.IdentityServer.WsFederation.Configuration
                 var reg = builder.Register(ctx => registration.Factory(new AutofacDependencyResolver(ctx)));
                 if (name != null)
                 {
-                    reg.Named(name, registration.InterfaceType);
+                    reg.Named(name, registration.DependencyType);
                 }
                 else
                 {
-                    reg.As(registration.InterfaceType);
+                    reg.As(registration.DependencyType);
                 }
             }
             else

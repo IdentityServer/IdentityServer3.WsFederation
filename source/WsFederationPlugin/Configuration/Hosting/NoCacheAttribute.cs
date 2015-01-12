@@ -27,11 +27,13 @@ namespace Thinktecture.IdentityServer.WsFederation.Hosting
                 actionExecutedContext.Response != null &&
                 actionExecutedContext.Response.IsSuccessStatusCode)
             {
-                var cc = new System.Net.Http.Headers.CacheControlHeaderValue();
-                cc.NoStore = true;
-                cc.NoCache = true;
-                cc.Private = true;
-                cc.MaxAge = TimeSpan.Zero;
+                var cc = new System.Net.Http.Headers.CacheControlHeaderValue
+                {
+                    NoStore = true,
+                    NoCache = true,
+                    Private = true,
+                    MaxAge = TimeSpan.Zero
+                };
                 actionExecutedContext.Response.Headers.CacheControl = cc;
 
                 actionExecutedContext.Response.Headers.Add("Pragma", "no-cache");

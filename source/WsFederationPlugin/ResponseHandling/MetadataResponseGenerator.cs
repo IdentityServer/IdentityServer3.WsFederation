@@ -15,17 +15,21 @@
  */
 
 using System;
+using System.ComponentModel;
 using System.IdentityModel.Metadata;
 using System.IdentityModel.Protocols.WSTrust;
 using System.IdentityModel.Tokens;
 using Thinktecture.IdentityModel.Constants;
 using Thinktecture.IdentityServer.Core.Configuration;
 
+#pragma warning disable 1591
+
 namespace Thinktecture.IdentityServer.WsFederation.ResponseHandling
 {
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public class MetadataResponseGenerator
     {
-        private IdentityServerOptions _options;
+        private readonly IdentityServerOptions _options;
 
         public MetadataResponseGenerator(IdentityServerOptions options)
         {
