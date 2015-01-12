@@ -21,17 +21,84 @@ namespace Thinktecture.IdentityServer.WsFederation.Models
 {
     public class RelyingParty
     {
+        /// <summary>
+        /// Gets or sets the display name.
+        /// </summary>
+        /// <value>
+        /// The name.
+        /// </value>
         public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this <see cref="RelyingParty"/> is enabled.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if enabled; otherwise, <c>false</c>.
+        /// </value>
         public bool Enabled { get; set; }
 
+        /// <summary>
+        /// Gets or sets the realm.
+        /// </summary>
+        /// <value>
+        /// The realm.
+        /// </value>
         public string Realm { get; set; }
+
+        /// <summary>
+        /// Gets or sets the reply URL.
+        /// </summary>
+        /// <value>
+        /// The reply URL.
+        /// </value>
         public string ReplyUrl { get; set; }
+
+        /// <summary>
+        /// Gets or sets the type of the token.
+        /// </summary>
+        /// <value>
+        /// The type of the token.
+        /// </value>
         public string TokenType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the token life time.
+        /// </summary>
+        /// <value>
+        /// The token life time.
+        /// </value>
         public int TokenLifeTime { get; set; }
+
+        /// <summary>
+        /// Gets or sets the encrypting certificate.
+        /// </summary>
+        /// <value>
+        /// The encrypting certificate.
+        /// </value>
         public X509Certificate2 EncryptingCertificate { get; set; }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether to include all claims for the user in the token.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if include all claims for user; otherwise, <c>false</c>.
+        /// </value>
         public bool IncludeAllClaimsForUser { get; set; }
-        public bool DefaultClaimTypeMappingPrefix { get; set; }
+
+        /// <summary>
+        /// Gets or sets the default claim type mapping prefix.
+        /// </summary>
+        /// <value>
+        /// The default claim type mapping prefix.
+        /// </value>
+        public string DefaultClaimTypeMappingPrefix { get; set; }
+
+        /// <summary>
+        /// Gets or sets the claim mappings.
+        /// </summary>
+        /// <value>
+        /// The claim mappings.
+        /// </value>
         public Dictionary<string, string> ClaimMappings { get; set; }
     }
 }
