@@ -77,5 +77,6 @@ task CreateNuGetPackage -depends ILMerge {
 	}
 
 	copy-item $src_directory\Thinktecture.IdentityServer.v3.WsFederation.nuspec $dist_directory
+	copy-item $output_directory\Thinktecture.IdentityServer.WsFederation.xml $dist_directory\lib\net45\
 	exec { . $nuget_path pack $dist_directory\Thinktecture.IdentityServer.v3.WsFederation.nuspec -BasePath $dist_directory -o $dist_directory -version $packageVersion }
 }
