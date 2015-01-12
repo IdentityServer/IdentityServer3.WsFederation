@@ -24,26 +24,26 @@ namespace Thinktecture.IdentityServer.WsFederation.Hosting
 {
     internal class AutofacScope : IDependencyScope
     {
-        ILifetimeScope scope;
+        readonly ILifetimeScope scope;
 
         public AutofacScope(ILifetimeScope scope)
         {
             this.scope = scope;
         }
 
-        public object GetService(System.Type serviceType)
+        public object GetService(Type serviceType)
         {
             return scope.ResolveOptional(serviceType);
         }
 
-        public System.Collections.Generic.IEnumerable<object> GetServices(System.Type serviceType)
+        public IEnumerable<object> GetServices(Type serviceType)
         {
             if (!scope.IsRegistered(serviceType))
             {
                 return Enumerable.Empty<object>();
             }
 
-            Type type = typeof(IEnumerable<>).MakeGenericType(new Type[] { serviceType });
+            Type type = typeof(IEnumerable<>).MakeGenericType(serviceType);
             return (IEnumerable<object>)scope.Resolve(type);
         }
 

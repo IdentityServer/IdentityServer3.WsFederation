@@ -16,6 +16,7 @@
 
 using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
+using Thinktecture.IdentityModel.Constants;
 
 namespace Thinktecture.IdentityServer.WsFederation.Models
 {
@@ -110,7 +111,7 @@ namespace Thinktecture.IdentityServer.WsFederation.Models
         public RelyingParty()
         {
             ClaimMappings = new Dictionary<string, string>();
-            TokenType = Thinktecture.IdentityModel.Constants.TokenTypes.Saml2TokenProfile11;
+            TokenType = TokenTypes.Saml2TokenProfile11;
             TokenLifeTime = 8;
         }
     }

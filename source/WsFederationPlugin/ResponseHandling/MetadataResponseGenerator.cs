@@ -29,7 +29,7 @@ namespace Thinktecture.IdentityServer.WsFederation.ResponseHandling
     [EditorBrowsable(EditorBrowsableState.Never)]
     public class MetadataResponseGenerator
     {
-        private IdentityServerOptions _options;
+        private readonly IdentityServerOptions _options;
 
         public MetadataResponseGenerator(IdentityServerOptions options)
         {

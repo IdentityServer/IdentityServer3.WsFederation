@@ -26,7 +26,7 @@ namespace Thinktecture.IdentityServer.WsFederation.Services
     /// </summary>
     public class InMemoryRelyingPartyService : IRelyingPartyService
     {
-        IEnumerable<RelyingParty> _rps;
+        readonly IEnumerable<RelyingParty> _rps;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="InMemoryRelyingPartyService"/> class.

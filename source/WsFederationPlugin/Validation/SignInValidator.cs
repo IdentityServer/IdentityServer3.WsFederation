@@ -53,7 +53,7 @@ namespace Thinktecture.IdentityServer.WsFederation.Validation
             {
                 result.IsSignInRequired = true;
                 return result;
-            };
+            }
 
             var rp = await _relyingParties.GetByRealmAsync(message.Realm);
 

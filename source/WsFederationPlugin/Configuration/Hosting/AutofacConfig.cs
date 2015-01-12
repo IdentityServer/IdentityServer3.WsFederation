@@ -28,7 +28,7 @@ namespace Thinktecture.IdentityServer.WsFederation.Configuration
 {
     internal static class AutofacConfig
     {
-        static ILog Logger = LogProvider.GetCurrentClassLogger();
+        static readonly ILog Logger = LogProvider.GetCurrentClassLogger();
 
         public static IContainer Configure(WsFederationPluginOptions options)
         {

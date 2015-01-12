@@ -28,7 +28,7 @@ namespace Thinktecture.IdentityServer.WsFederation.Configuration
     /// </summary>
     public class WsFederationServiceFactory
     {
-        private static ILog Logger = LogProvider.GetCurrentClassLogger();
+        private static readonly ILog Logger = LogProvider.GetCurrentClassLogger();
 
         // keep list of any additional dependencies the 
         // hosting application might need. these will be

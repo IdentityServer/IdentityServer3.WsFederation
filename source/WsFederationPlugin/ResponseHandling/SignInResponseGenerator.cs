@@ -92,8 +92,7 @@ namespace Thinktecture.IdentityServer.WsFederation.ResponseHandling
             if (validationResult.RelyingParty.IncludeAllClaimsForUser)
             {
                 var claims = await _users.GetProfileDataAsync(
-                    validationResult.Subject,
-                    null);
+                    validationResult.Subject);
 
                 profileClaims = claims.ToList();
             }
