@@ -29,6 +29,9 @@ namespace Thinktecture.IdentityServer.WsFederation.Models
         public string TokenType { get; set; }
         public int TokenLifeTime { get; set; }
         public X509Certificate2 EncryptingCertificate { get; set; }
+
+        public bool IncludeAllClaimsForUser { get; set; }
+        public bool DefaultClaimTypeMappingPrefix { get; set; }
         public Dictionary<string, string> ClaimMappings { get; set; }
     }
 }
