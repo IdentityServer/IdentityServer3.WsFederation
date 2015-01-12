@@ -15,11 +15,12 @@
  */
 
 using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IdentityModel.Protocols.WSTrust;
 using System.IdentityModel.Services;
 using System.IdentityModel.Tokens;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Thinktecture.IdentityModel;
@@ -30,8 +31,11 @@ using Thinktecture.IdentityServer.Core.Logging;
 using Thinktecture.IdentityServer.Core.Services;
 using Thinktecture.IdentityServer.WsFederation.Validation;
 
+#pragma warning disable 1591
+
 namespace Thinktecture.IdentityServer.WsFederation.ResponseHandling
 {
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public class SignInResponseGenerator
     {
         private readonly static ILog Logger = LogProvider.GetCurrentClassLogger();

@@ -15,15 +15,18 @@
  */
 
 using System;
+using System.ComponentModel;
 using System.IdentityModel.Services;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Thinktecture.IdentityServer.Core.Extensions;
 using Thinktecture.IdentityServer.Core.Logging;
 using Thinktecture.IdentityServer.WsFederation.Services;
 
+#pragma warning disable 1591
+
 namespace Thinktecture.IdentityServer.WsFederation.Validation
 {
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public class SignInValidator
     {
         private readonly static ILog Logger = LogProvider.GetCurrentClassLogger();

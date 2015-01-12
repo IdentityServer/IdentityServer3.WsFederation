@@ -15,6 +15,7 @@
  */
 
 using System;
+using System.ComponentModel;
 using System.IdentityModel.Services;
 using System.Net.Http;
 using System.Security.Claims;
@@ -25,14 +26,14 @@ using Thinktecture.IdentityServer.Core.Configuration;
 using Thinktecture.IdentityServer.Core.Extensions;
 using Thinktecture.IdentityServer.Core.Logging;
 using Thinktecture.IdentityServer.Core.Models;
-using Thinktecture.IdentityServer.Core.Results;
 using Thinktecture.IdentityServer.Core.Services;
 using Thinktecture.IdentityServer.WsFederation.Configuration;
 using Thinktecture.IdentityServer.WsFederation.Hosting;
 using Thinktecture.IdentityServer.WsFederation.ResponseHandling;
 using Thinktecture.IdentityServer.WsFederation.Results;
-using Thinktecture.IdentityServer.WsFederation.Services;
 using Thinktecture.IdentityServer.WsFederation.Validation;
+
+#pragma warning disable 1591
 
 namespace Thinktecture.IdentityServer.WsFederation
 {
@@ -40,6 +41,7 @@ namespace Thinktecture.IdentityServer.WsFederation
     [RoutePrefix("")]
     [NoCache]
     [SecurityHeaders(EnableCsp=false)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public class WsFederationController : ApiController
     {
         private readonly static ILog Logger = LogProvider.GetCurrentClassLogger();

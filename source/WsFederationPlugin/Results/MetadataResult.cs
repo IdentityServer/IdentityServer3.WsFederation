@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+using System.ComponentModel;
 using System.IdentityModel.Metadata;
 using System.IO;
 using System.Net.Http;
@@ -24,8 +25,11 @@ using System.Web.Http;
 using System.Xml;
 using Thinktecture.IdentityServer.Core.Logging;
 
+#pragma warning disable 1591
+
 namespace Thinktecture.IdentityServer.WsFederation.Results
 {
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public class MetadataResult : IHttpActionResult
     {
         private readonly static ILog Logger = LogProvider.GetCurrentClassLogger();

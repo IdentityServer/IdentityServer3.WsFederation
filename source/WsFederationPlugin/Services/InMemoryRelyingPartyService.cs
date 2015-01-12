@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -20,15 +21,29 @@ using Thinktecture.IdentityServer.WsFederation.Models;
 
 namespace Thinktecture.IdentityServer.WsFederation.Services
 {
+    /// <summary>
+    /// In-memory service for relying party configuration
+    /// </summary>
     public class InMemoryRelyingPartyService : IRelyingPartyService
     {
         IEnumerable<RelyingParty> _rps;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="InMemoryRelyingPartyService"/> class.
+        /// </summary>
+        /// <param name="rps">The RPS.</param>
         public InMemoryRelyingPartyService(IEnumerable<RelyingParty> rps)
         {
             _rps = rps;
         }
 
+        /// <summary>
+        /// Retrieves a relying party by realm.
+        /// </summary>
+        /// <param name="realm">The realm.</param>
+        /// <returns>
+        /// The relying party
+        /// </returns>
         public Task<RelyingParty> GetByRealmAsync(string realm)
         {
             return Task.FromResult(_rps.FirstOrDefault(rp => rp.Realm == realm && rp.Enabled));
