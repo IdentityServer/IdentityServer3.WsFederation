@@ -66,7 +66,7 @@ namespace Thinktecture.IdentityServer.WsFederation.Models
         public string TokenType { get; set; }
 
         /// <summary>
-        /// Gets or sets the token life time in hours.
+        /// Gets or sets the token life time in minutes.
         /// </summary>
         /// <value>
         /// The token life time.

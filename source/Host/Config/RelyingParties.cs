@@ -17,7 +17,7 @@ namespace Host.Config
                     Enabled = true,
                     ReplyUrl = "https://web.local/idsrvrp/",
                     TokenType = Thinktecture.IdentityModel.Constants.TokenTypes.Saml2TokenProfile11,
-                    TokenLifeTime = 1,
+                    TokenLifeTime = 60,
 
                     ClaimMappings = new Dictionary<string,string>
                     {
@@ -32,7 +32,7 @@ namespace Host.Config
                     Enabled = true,
                     ReplyUrl = "http://localhost:10313/",
                     TokenType = Thinktecture.IdentityModel.Constants.TokenTypes.JsonWebToken,
-                    TokenLifeTime = 1,
+                    TokenLifeTime = 60,
 
                     ClaimMappings = new Dictionary<string, string>
                     {
