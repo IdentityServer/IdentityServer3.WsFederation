@@ -1,16 +1,16 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>Thinktecture.IdentityServer.v3.WsFederation</id>
+    <id>Thinktecture.IdentityServer3.WsFederation</id>
     <version>0.0.0</version>
-    <title>Thinktecture IdentityServer v3 WS-Federation Plugin</title>
+    <title>Thinktecture IdentityServer3 WS-Federation Plugin</title>
     <authors>Brock Allen, Dominick Baier</authors>
     <owners>Brock Allen, Dominick Baier</owners>
-    <projectUrl>https://github.com/thinktecture/Thinktecture.IdentityServer.v3.WsFederation</projectUrl>
+    <projectUrl>https://github.com/identityserver/Thinktecture.IdentityServer3.WsFederation</projectUrl>
     <iconUrl>http://www.thinktecture.com/images/favicon.ico</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>WS-Federation Plugin for Thinktecture IdentityServer v3.</description>
-    <copyright>Copyright 2014</copyright>
+    <description>WS-Federation Plugin for Thinktecture IdentityServer3.</description>
+    <copyright>Copyright 2015</copyright>
     <tags>Thinktecture IdentityServer WS-Federation</tags>
 
     <frameworkAssemblies>
@@ -21,7 +21,7 @@
 
     <dependencies>
       <dependency id="Owin" version="1.0"/>
-      <dependency id="Thinktecture.IdentityServer.v3" version="1.0.0-rc" />
+      <dependency id="Thinktecture.IdentityServer3" version="1.0.0" />
     </dependencies>
   </metadata>
 </package>

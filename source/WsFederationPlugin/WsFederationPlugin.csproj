@@ -7,8 +7,8 @@
     <ProjectGuid>{4C93CD29-54C0-43CC-BF45-68E0DEC91CAA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Thinktecture.IdentityServer.v3.WsFederation</RootNamespace>
-    <AssemblyName>Thinktecture.IdentityServer.v3.WsFederation</AssemblyName>
+    <RootNamespace>Thinktecture.IdentityServer.WsFederation</RootNamespace>
+    <AssemblyName>Thinktecture.IdentityServer3.WsFederation</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -20,7 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\..\build\Thinktecture.IdentityServer.WsFederation.XML</DocumentationFile>
+    <DocumentationFile>..\..\build\Thinktecture.IdentityServer3.WsFederation.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -29,7 +29,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\..\build\Thinktecture.IdentityServer.WsFederation.XML</DocumentationFile>
+    <DocumentationFile>..\..\build\Thinktecture.IdentityServer3.WsFederation.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Autofac, Version=3.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
