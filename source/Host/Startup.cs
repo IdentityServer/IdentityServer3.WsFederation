@@ -29,7 +29,7 @@ namespace Host
                 var options = new IdentityServerOptions
                 {
                     IssuerUri = "https://idsrv3.com",
-                    SiteName = "Thinktecture IdentityServer v3",
+                    SiteName = "Thinktecture IdentityServer3",
 
                     SigningCertificate = Certificate.Get(),
                     Factory = factory,
