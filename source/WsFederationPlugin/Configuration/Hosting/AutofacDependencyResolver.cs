@@ -16,7 +16,7 @@
  */
 using Thinktecture.IdentityServer.Core.Services;
 
-namespace Thinktecture.IdentityServer.v3.WsFederation.Configuration.Hosting
+namespace Thinktecture.IdentityServer.WsFederation.Configuration.Hosting
 {
     internal class AutofacDependencyResolver : IDependencyResolver
     {

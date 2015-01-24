@@ -2,6 +2,7 @@
 using Owin;
 using System.Collections.Generic;
 using Thinktecture.IdentityServer.Core.Configuration;
+using Thinktecture.IdentityServer.Core.Logging;
 using Thinktecture.IdentityServer.Core.Services.InMemory;
 using Thinktecture.IdentityServer.Host.Config;
 using Thinktecture.IdentityServer.WsFederation.Configuration;
@@ -14,6 +15,8 @@ namespace Host
     {
         public void Configuration(IAppBuilder app)
         {
+            LogProvider.SetCurrentLogProvider(new DiagnosticsTraceLogProvider());
+
             app.Map("/core", coreApp =>
             {
                 coreApp.Use(async (ctx, next) =>
