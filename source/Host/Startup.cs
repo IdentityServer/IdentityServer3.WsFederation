@@ -19,15 +19,10 @@ namespace Host
 
             app.Map("/core", coreApp =>
             {
-                coreApp.Use(async (ctx, next) =>
-                {
-                    await next();
-                });
-                
                 var factory = InMemoryFactory.Create(
-                    users:   Users.Get(),
+                    users: Users.Get(),
                     clients: Clients.Get(),
-                    scopes:  Scopes.Get());
+                    scopes: Scopes.Get());
 
                 var options = new IdentityServerOptions
                 {
@@ -37,6 +32,12 @@ namespace Host
                     SigningCertificate = Certificate.Get(),
                     Factory = factory,
                     PluginConfiguration = ConfigurePlugins,
+
+                    LoggingOptions = new LoggingOptions
+                    {
+                        EnableHttpLogging = true,
+                        EnableWebApiDiagnostics = true
+                    }
                 };
 
                 coreApp.UseIdentityServer(options);
