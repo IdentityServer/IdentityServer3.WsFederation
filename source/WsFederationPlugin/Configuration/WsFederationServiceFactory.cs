@@ -78,6 +78,11 @@ namespace Thinktecture.IdentityServer.WsFederation.Configuration
         /// </value>
         public Registration<IRelyingPartyService> RelyingPartyService { get; set; }
 
+        public WsFederationServiceFactory(IdentityServerServiceFactory factory)
+        {
+            UserService = factory.UserService;
+        }
+
         /// <summary>
         /// Validates this instance.
         /// </summary>
