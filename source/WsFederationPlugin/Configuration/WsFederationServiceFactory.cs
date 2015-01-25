@@ -78,6 +78,10 @@ namespace Thinktecture.IdentityServer.WsFederation.Configuration
         /// </value>
         public Registration<IRelyingPartyService> RelyingPartyService { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WsFederationServiceFactory"/> class.
+        /// </summary>
+        /// <param name="factory">The factory.</param>
         public WsFederationServiceFactory(IdentityServerServiceFactory factory)
         {
             UserService = factory.UserService;
