@@ -112,7 +112,8 @@ namespace Thinktecture.IdentityServer.WsFederation.Models
         {
             ClaimMappings = new Dictionary<string, string>();
             TokenType = TokenTypes.Saml2TokenProfile11;
-            TokenLifeTime = 8;
+            TokenLifeTime = 480;
+            Enabled = true;
         }
     }
 }
