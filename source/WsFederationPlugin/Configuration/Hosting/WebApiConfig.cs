@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright 2014 Dominick Baier, Brock Allen
+ * Copyright 2015 Dominick Baier, Brock Allen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+using System.Diagnostics;
 using System.Web.Http;
 using System.Web.Http.ExceptionHandling;
 using Thinktecture.IdentityServer.WsFederation.Hosting;
@@ -22,7 +23,7 @@ namespace Thinktecture.IdentityServer.WsFederation.Configuration
 {
     internal static class WebApiConfig
     {
-        public static HttpConfiguration Configure()
+        public static HttpConfiguration Configure(WsFederationPluginOptions options)
         {
             var config = new HttpConfiguration();
 
@@ -33,6 +34,24 @@ namespace Thinktecture.IdentityServer.WsFederation.Configuration
             config.Services.Add(typeof(IExceptionLogger), new LogProviderExceptionLogger());
 
             config.Formatters.Remove(config.Formatters.XmlFormatter);
+
+            config.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.LocalOnly;
+
+            if (options.IdentityServerOptions.LoggingOptions.EnableWebApiDiagnostics)
+            {
+                var liblog = new TraceSource("LibLog");
+                liblog.Switch.Level = SourceLevels.All;
+                liblog.Listeners.Add(new LibLogTraceListener());
+
+                var diag = config.EnableSystemDiagnosticsTracing();
+                diag.IsVerbose = options.IdentityServerOptions.LoggingOptions.WebApiDiagnosticsIsVerbose;
+                diag.TraceSource = liblog;
+            }
+
+            if (options.IdentityServerOptions.LoggingOptions.EnableHttpLogging)
+            {
+                config.MessageHandlers.Add(new RequestResponseLogger());
+            }
 
             return config;
         }

@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright 2014 Dominick Baier, Brock Allen
+ * Copyright 2015 Dominick Baier, Brock Allen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -77,6 +77,15 @@ namespace Thinktecture.IdentityServer.WsFederation.Configuration
         /// The relying party service.
         /// </value>
         public Registration<IRelyingPartyService> RelyingPartyService { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WsFederationServiceFactory"/> class.
+        /// </summary>
+        /// <param name="factory">The factory.</param>
+        public WsFederationServiceFactory(IdentityServerServiceFactory factory)
+        {
+            UserService = factory.UserService;
+        }
 
         /// <summary>
         /// Validates this instance.

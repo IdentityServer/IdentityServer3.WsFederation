@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright 2014 Dominick Baier, Brock Allen
+ * Copyright 2015 Dominick Baier, Brock Allen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -66,7 +66,7 @@ namespace Thinktecture.IdentityServer.WsFederation.Models
         public string TokenType { get; set; }
 
         /// <summary>
-        /// Gets or sets the token life time in hours.
+        /// Gets or sets the token life time in minutes.
         /// </summary>
         /// <value>
         /// The token life time.

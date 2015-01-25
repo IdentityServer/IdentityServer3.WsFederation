@@ -14,21 +14,21 @@
  * limitations under the License.
  */
 
-using System.Threading.Tasks;
-using Thinktecture.IdentityServer.WsFederation.Models;
+using System.Diagnostics;
+using Thinktecture.IdentityServer.Core.Logging;
 
-namespace Thinktecture.IdentityServer.WsFederation.Services
+namespace Thinktecture.IdentityServer.WsFederation.Hosting
 {
-    /// <summary>
-    /// Implements retrieval of relying party configuration
-    /// </summary>
-    public interface IRelyingPartyService
+    internal class LibLogTraceListener : TraceListener
     {
-        /// <summary>
-        /// Retrieves a relying party by realm.
-        /// </summary>
-        /// <param name="realm">The realm.</param>
-        /// <returns>The relying party</returns>
-        Task<RelyingParty> GetByRealmAsync(string realm);
+        private static readonly ILog Logger = LogProvider.GetLogger("WebApi Diagnostics");
+
+        public override void WriteLine(string message)
+        {
+            Logger.Debug(message);
+        }
+
+        public override void Write(string message)
+        { }
     }
 }

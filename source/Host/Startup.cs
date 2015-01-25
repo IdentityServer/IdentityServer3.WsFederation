@@ -2,7 +2,7 @@
 using Owin;
 using System.Collections.Generic;
 using Thinktecture.IdentityServer.Core.Configuration;
-using Thinktecture.IdentityServer.Core.Services.InMemory;
+using Thinktecture.IdentityServer.Core.Logging;
 using Thinktecture.IdentityServer.Host.Config;
 using Thinktecture.IdentityServer.WsFederation.Configuration;
 using Thinktecture.IdentityServer.WsFederation.Models;
@@ -14,26 +14,29 @@ namespace Host
     {
         public void Configuration(IAppBuilder app)
         {
+            LogProvider.SetCurrentLogProvider(new DiagnosticsTraceLogProvider());
+
             app.Map("/core", coreApp =>
             {
-                coreApp.Use(async (ctx, next) =>
-                {
-                    await next();
-                });
-                
                 var factory = InMemoryFactory.Create(
-                    users:   Users.Get(),
+                    users: Users.Get(),
                     clients: Clients.Get(),
-                    scopes:  Scopes.Get());
+                    scopes: Scopes.Get());
 
                 var options = new IdentityServerOptions
                 {
                     IssuerUri = "https://idsrv3.com",
-                    SiteName = "Thinktecture IdentityServer v3",
+                    SiteName = "Thinktecture IdentityServer3 with WS-Federation",
 
                     SigningCertificate = Certificate.Get(),
                     Factory = factory,
                     PluginConfiguration = ConfigurePlugins,
+
+                    //LoggingOptions = new LoggingOptions
+                    //{
+                    //    EnableHttpLogging = true,
+                    //    EnableWebApiDiagnostics = true
+                    //}
                 };
 
                 coreApp.UseIdentityServer(options);
@@ -42,14 +45,11 @@ namespace Host
 
         private void ConfigurePlugins(IAppBuilder pluginApp, IdentityServerOptions options)
         {
-            var factory = new WsFederationServiceFactory
-            {
-                UserService = options.Factory.UserService,
-                RelyingPartyService = new Registration<IRelyingPartyService>(typeof(InMemoryRelyingPartyService))
-            };
-
+            var factory = new WsFederationServiceFactory(options.Factory);
+            
             // data sources for in-memory services
             factory.Register(new Registration<IEnumerable<RelyingParty>>(RelyingParties.Get()));
+            factory.RelyingPartyService = new Registration<IRelyingPartyService>(typeof(InMemoryRelyingPartyService));
 
             var wsFedOptions = new WsFederationPluginOptions
             {

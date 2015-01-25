@@ -3,7 +3,7 @@ properties {
 	$src_directory = "$base_directory\source"
 	$output_directory = "$base_directory\build"
 	$dist_directory = "$base_directory\distribution"
-	$sln_file = "$src_directory\Thinktecture.IdentityServer.v3.WsFederation.sln"
+	$sln_file = "$src_directory\Thinktecture.IdentityServer3.WsFederation.sln"
 	$target_config = "Release"
 	$framework_version = "v4.5"
 	$xunit_path = "$src_directory\packages\xunit.runners.1.9.2\tools\xunit.console.clr4.exe"
@@ -16,6 +16,7 @@ properties {
 }
 
 task default -depends Clean, CreateNuGetPackage
+task appVeyor -depends Clean, CreateNuGetPackage
 
 task Clean {
 	rmdir $output_directory -ea SilentlyContinue -recurse
@@ -46,20 +47,19 @@ task UpdateVersion {
 }
 
 task ILMerge -depends Compile {
-	$input_dlls = "$output_directory\Thinktecture.IdentityServer.v3.WsFederation.dll"
+	$input_dlls = "$output_directory\Thinktecture.IdentityServer3.WsFederation.dll"
 
 	Get-ChildItem -Path $output_directory -Filter *.dll |
 		foreach-object {
-			# Exclude Thinktecture.IdentityServer.Core.dll as that will be the primary assembly
-			if ("$_" -ne "Thinktecture.IdentityServer.v3.WsFederation.dll" -and
-				"$_" -ne "Thinktecture.IdentityServer.dll" -and 
+			if ("$_" -ne "Thinktecture.IdentityServer3.WsFederation.dll" -and
+				"$_" -ne "Thinktecture.IdentityServer3.dll" -and 
 			    "$_" -ne "Owin.dll") {
 				$input_dlls = "$input_dlls $output_directory\$_"
 			}
 	}
 
 	New-Item $dist_directory\lib\net45 -Type Directory
-	Invoke-Expression "$ilmerge_path /targetplatform:v4 /internalize /allowDup /target:library /out:$dist_directory\lib\net45\Thinktecture.IdentityServer.WsFederation.dll $input_dlls"
+	Invoke-Expression "$ilmerge_path /targetplatform:v4 /internalize /allowDup /target:library /out:$dist_directory\lib\net45\Thinktecture.IdentityServer3.WsFederation.dll $input_dlls"
 }
 
 task CreateNuGetPackage -depends ILMerge {
@@ -76,7 +76,11 @@ task CreateNuGetPackage -depends ILMerge {
 		$packageVersion = "$packageVersion-$preRelease" 
 	}
 
-	copy-item $src_directory\Thinktecture.IdentityServer.v3.WsFederation.nuspec $dist_directory
-	copy-item $output_directory\Thinktecture.IdentityServer.WsFederation.xml $dist_directory\lib\net45\
-	exec { . $nuget_path pack $dist_directory\Thinktecture.IdentityServer.v3.WsFederation.nuspec -BasePath $dist_directory -o $dist_directory -version $packageVersion }
+	if ($buildNumber -ne 0){
+		$packageVersion = $packageVersion + "-build" + $buildNumber.ToString().PadLeft(5,'0')
+	}
+
+	copy-item $src_directory\Thinktecture.IdentityServer3.WsFederation.nuspec $dist_directory
+	copy-item $output_directory\Thinktecture.IdentityServer3.WsFederation.xml $dist_directory\lib\net45\
+	exec { . $nuget_path pack $dist_directory\Thinktecture.IdentityServer3.WsFederation.nuspec -BasePath $dist_directory -o $dist_directory -version $packageVersion }
 }
