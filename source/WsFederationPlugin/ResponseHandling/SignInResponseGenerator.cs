@@ -118,7 +118,20 @@ namespace Thinktecture.IdentityServer.WsFederation.ResponseHandling
                 // if an explicit mapping exists, use it
                 if (validationResult.RelyingParty.ClaimMappings.TryGetValue(claim.Type, out mappedType))
                 {
-                    mappedClaims.Add(new Claim(mappedType, claim.Value));
+                    // if output claim is a SAML name ID - check is any name ID format is configured
+                    if (mappedType == ClaimTypes.NameIdentifier)
+                    {
+                        var nameId = new Claim(ClaimTypes.NameIdentifier, claim.Value);
+                        if (!string.IsNullOrEmpty(validationResult.RelyingParty.SamlNameIdentifierFormat))
+                        {
+                            nameId.Properties[ClaimProperties.SamlNameIdentifierFormat] = validationResult.RelyingParty.SamlNameIdentifierFormat;
+                            mappedClaims.Add(nameId);
+                        }
+                    }
+                    else
+                    {
+                        mappedClaims.Add(new Claim(mappedType, claim.Value));
+                    }
                 }
                 else
                 {
