@@ -98,6 +98,14 @@ namespace Thinktecture.IdentityServer.WsFederation.Models
         public string DefaultClaimTypeMappingPrefix { get; set; }
 
         /// <summary>
+        /// Gets or sets the name identifier format (SAML only).
+        /// </summary>
+        /// <value>
+        /// The SAML name identifier format.
+        /// </value>
+        public string SamlNameIdentifierFormat { get; set; }
+
+        /// <summary>
         /// Gets or sets the claim mappings.
         /// </summary>
         /// <value>
@@ -112,7 +120,8 @@ namespace Thinktecture.IdentityServer.WsFederation.Models
         {
             ClaimMappings = new Dictionary<string, string>();
             TokenType = TokenTypes.Saml2TokenProfile11;
-            TokenLifeTime = 480;
+            SamlNameIdentifierFormat = SamlNameIdentifierFormats.UnspecifiedString;
+            TokenLifeTime = 600;
             Enabled = true;
         }
     }
