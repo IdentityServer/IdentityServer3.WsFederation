@@ -5,3 +5,5 @@ Dev build: [![Build status](https://ci.appveyor.com/api/projects/status/ldvb26el
 [![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/IdentityServer/Thinktecture.IdentityServer3?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 WS-Federation Plugin for IdentityServer3
+
+See [here](https://identityserver.github.io/Documentation/docs/wsFederation/overview.html) for documentation.
