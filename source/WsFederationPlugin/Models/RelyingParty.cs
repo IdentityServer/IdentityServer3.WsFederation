@@ -15,6 +15,7 @@
  */
 
 using System.Collections.Generic;
+using System.IdentityModel.Tokens;
 using System.Security.Cryptography.X509Certificates;
 using Thinktecture.IdentityModel.Constants;
 
@@ -114,6 +115,22 @@ namespace Thinktecture.IdentityServer.WsFederation.Models
         public Dictionary<string, string> ClaimMappings { get; set; }
 
         /// <summary>
+        /// Gets or sets the tokenn signature algorithm.
+        /// </summary>
+        /// <value>
+        /// The signature algorithm.
+        /// </value>
+        public string SignatureAlgorithm { get; set; }
+
+        /// <summary>
+        /// Gets or sets the digest algorithm.
+        /// </summary>
+        /// <value>
+        /// The digest algorithm.
+        /// </value>
+        public string DigestAlgorithm { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="RelyingParty"/> class.
         /// </summary>
         public RelyingParty()
@@ -121,6 +138,10 @@ namespace Thinktecture.IdentityServer.WsFederation.Models
             ClaimMappings = new Dictionary<string, string>();
             TokenType = TokenTypes.Saml2TokenProfile11;
             SamlNameIdentifierFormat = SamlNameIdentifierFormats.UnspecifiedString;
+
+            SignatureAlgorithm = SecurityAlgorithms.RsaSha256Signature;
+            DigestAlgorithm = SecurityAlgorithms.Sha256Digest;
+
             TokenLifeTime = 600;
             Enabled = true;
         }

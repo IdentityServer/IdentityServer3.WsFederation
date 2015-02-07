@@ -167,7 +167,7 @@ namespace Thinktecture.IdentityServer.WsFederation.ResponseHandling
                 AppliesToAddress = validationResult.RelyingParty.Realm,
                 Lifetime = new Lifetime(DateTime.UtcNow, DateTime.UtcNow.AddMinutes(validationResult.RelyingParty.TokenLifeTime)),
                 ReplyToAddress = validationResult.ReplyUrl,
-                SigningCredentials = new X509SigningCredentials(_options.SigningCertificate),
+                SigningCredentials = new X509SigningCredentials(_options.SigningCertificate, validationResult.RelyingParty.SignatureAlgorithm, validationResult.RelyingParty.DigestAlgorithm),
                 Subject = outgoingSubject,
                 TokenIssuerName = _options.IssuerUri,
                 TokenType = validationResult.RelyingParty.TokenType
