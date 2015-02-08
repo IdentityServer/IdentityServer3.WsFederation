@@ -39,6 +39,7 @@ namespace Thinktecture.IdentityServer.WsFederation.Validation
         
         public string ReplyUrl { get; set; }
         public string HomeRealm { get; set; }
+        public string Federation { get; set; }
 
         public ClaimsPrincipal Subject { get; set; }
     }

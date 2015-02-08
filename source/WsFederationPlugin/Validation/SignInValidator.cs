@@ -42,19 +42,26 @@ namespace Thinktecture.IdentityServer.WsFederation.Validation
             Logger.Info("Validating WS-Federation signin request");
             var result = new SignInValidationResult();
 
+            // parse whr
             if (!String.IsNullOrWhiteSpace(message.HomeRealm))
             {
                 Logger.Info("Setting home realm to: " + message.HomeRealm);
                 result.HomeRealm = message.HomeRealm;
             }
 
-            // todo: wfresh handling?
+            // parse wfed
+            if (!String.IsNullOrWhiteSpace(message.Federation))
+            {
+                result.Federation = message.Federation;
+            }
+
             if (!subject.Identity.IsAuthenticated)
             {
                 result.IsSignInRequired = true;
                 return result;
             }
 
+            // check realm
             var rp = await _relyingParties.GetByRealmAsync(message.Realm);
 
             if (rp == null || rp.Enabled == false)

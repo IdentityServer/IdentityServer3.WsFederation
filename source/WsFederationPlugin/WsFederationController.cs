@@ -143,6 +143,11 @@ namespace Thinktecture.IdentityServer.WsFederation
             {
                 message.IdP = result.HomeRealm;
             }
+
+            if (!String.IsNullOrWhiteSpace(result.Federation))
+            {
+                message.AcrValues = new[] { result.Federation };
+            }
             
             var env = Request.GetOwinEnvironment();
             var url = env.CreateSignInRequest(message);
