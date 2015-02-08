@@ -45,17 +45,11 @@ namespace Host
 
         private void ConfigurePlugins(IAppBuilder pluginApp, IdentityServerOptions options)
         {
-            var factory = new WsFederationServiceFactory(options.Factory);
-            
-            // data sources for in-memory services
-            factory.Register(new Registration<IEnumerable<RelyingParty>>(RelyingParties.Get()));
-            factory.RelyingPartyService = new Registration<IRelyingPartyService>(typeof(InMemoryRelyingPartyService));
+            var wsFedOptions = new WsFederationPluginOptions(options);
 
-            var wsFedOptions = new WsFederationPluginOptions
-            {
-                IdentityServerOptions = options,
-                Factory = factory
-            };
+            // data sources for in-memory services
+            wsFedOptions.Factory.Register(new Registration<IEnumerable<RelyingParty>>(RelyingParties.Get()));
+            wsFedOptions.Factory.RelyingPartyService = new Registration<IRelyingPartyService>(typeof(InMemoryRelyingPartyService));
 
             pluginApp.UseWsFederationPlugin(wsFedOptions);
         }

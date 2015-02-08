@@ -16,9 +16,11 @@
 
 using Autofac;
 using Autofac.Integration.WebApi;
+using Microsoft.Owin;
 using System;
 using Thinktecture.IdentityServer.Core.Configuration;
 using Thinktecture.IdentityServer.Core.Logging;
+using Thinktecture.IdentityServer.Core.Services;
 using Thinktecture.IdentityServer.WsFederation.Configuration.Hosting;
 using Thinktecture.IdentityServer.WsFederation.Hosting;
 using Thinktecture.IdentityServer.WsFederation.ResponseHandling;
@@ -57,6 +59,8 @@ namespace Thinktecture.IdentityServer.WsFederation.Configuration
 
             // load core controller
             builder.RegisterApiControllers(typeof(WsFederationController).Assembly);
+
+            builder.Register<OwinEnvironmentService>(resolver => new OwinEnvironmentService(resolver.Resolve<IOwinContext>().Environment));
 
             // register additional dependencies from identity server
             foreach (var registration in options.IdentityServerOptions.Factory.Registrations)

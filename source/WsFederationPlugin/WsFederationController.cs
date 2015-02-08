@@ -121,10 +121,12 @@ namespace Thinktecture.IdentityServer.WsFederation
 
             if (result.IsSignInRequired)
             {
+                Logger.Info("Redirecting to login page");
                 return RedirectToLogin(result);
             }
             if (result.IsError)
             {
+                Logger.Error(result.Error);
                 return BadRequest(result.Error);
             }
 
@@ -142,6 +144,11 @@ namespace Thinktecture.IdentityServer.WsFederation
             if (!String.IsNullOrWhiteSpace(result.HomeRealm))
             {
                 message.IdP = result.HomeRealm;
+            }
+
+            if (!String.IsNullOrWhiteSpace(result.Federation))
+            {
+                message.AcrValues = new[] { result.Federation };
             }
             
             var env = Request.GetOwinEnvironment();

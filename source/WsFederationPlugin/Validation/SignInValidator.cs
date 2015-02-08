@@ -20,6 +20,7 @@ using System.IdentityModel.Services;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Thinktecture.IdentityServer.Core.Logging;
+using Thinktecture.IdentityServer.WsFederation.Logging;
 using Thinktecture.IdentityServer.WsFederation.Services;
 
 #pragma warning disable 1591
@@ -39,27 +40,33 @@ namespace Thinktecture.IdentityServer.WsFederation.Validation
 
         public async Task<SignInValidationResult> ValidateAsync(SignInRequestMessage message, ClaimsPrincipal subject)
         {
-            Logger.Info("Validating WS-Federation signin request");
+            Logger.Info("Start WS-Federation signin request validation");
             var result = new SignInValidationResult();
 
+            // parse whr
             if (!String.IsNullOrWhiteSpace(message.HomeRealm))
             {
-                Logger.Info("Setting home realm to: " + message.HomeRealm);
                 result.HomeRealm = message.HomeRealm;
             }
 
-            // todo: wfresh handling?
+            // parse wfed
+            if (!String.IsNullOrWhiteSpace(message.Federation))
+            {
+                result.Federation = message.Federation;
+            }
+
             if (!subject.Identity.IsAuthenticated)
             {
                 result.IsSignInRequired = true;
                 return result;
             }
 
+            // check realm
             var rp = await _relyingParties.GetByRealmAsync(message.Realm);
 
             if (rp == null || rp.Enabled == false)
             {
-                Logger.Error("Relying party not found: " + message.Realm);
+                LogError("Relying party not found: " + message.Realm, result);
 
                 return new SignInValidationResult
                 {
@@ -68,16 +75,25 @@ namespace Thinktecture.IdentityServer.WsFederation.Validation
                 };
             }
 
-            Logger.InfoFormat("Relying party registration found: {0} / {1}", rp.Realm, rp.Name);
-
             result.ReplyUrl = rp.ReplyUrl;
-            Logger.InfoFormat("Reply URL set to: " + result.ReplyUrl);
-
             result.RelyingParty = rp;
             result.SignInRequestMessage = message;
             result.Subject = subject;
 
+            LogSuccess(result);
             return result;
+        }
+
+        private void LogSuccess(SignInValidationResult result)
+        {
+            var log = LogSerializer.Serialize(new SignInValidationLog(result));
+            Logger.InfoFormat("End WS-Federation signin request validation\n{0}", log);
+        }
+
+        private void LogError(string message, SignInValidationResult result)
+        {
+            var log = LogSerializer.Serialize(new SignInValidationLog(result));
+            Logger.ErrorFormat("{0}\n{1}", message, log);
         }
     }
 }

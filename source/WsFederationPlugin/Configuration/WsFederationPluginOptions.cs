@@ -99,6 +99,21 @@ namespace Thinktecture.IdentityServer.WsFederation.Configuration
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="WsFederationPluginOptions"/> class.
+        /// Assigns the IdentityServerOptions and the Factory from the IdentityServerOptions.
+        /// </summary>
+        /// <param name="options">The options.</param>
+        /// <exception cref="System.ArgumentNullException">options</exception>
+        public WsFederationPluginOptions(IdentityServerOptions options)
+            : this()
+        {
+            if (options == null) throw new ArgumentNullException("options");
+            
+            this.IdentityServerOptions = options;
+            this.Factory = new WsFederationServiceFactory(options.Factory);
+        }
+
+        /// <summary>
         /// Validates this instance.
         /// </summary>
         /// <exception cref="System.ArgumentNullException">
