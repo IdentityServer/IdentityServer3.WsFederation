@@ -137,8 +137,7 @@ namespace Thinktecture.IdentityServer.WsFederation.Models
         {
             ClaimMappings = new Dictionary<string, string>();
             TokenType = TokenTypes.Saml2TokenProfile11;
-            SamlNameIdentifierFormat = SamlNameIdentifierFormats.UnspecifiedString;
-
+            
             SignatureAlgorithm = SecurityAlgorithms.RsaSha256Signature;
             DigestAlgorithm = SecurityAlgorithms.Sha256Digest;
 
