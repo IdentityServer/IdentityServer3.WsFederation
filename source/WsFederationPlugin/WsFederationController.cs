@@ -121,10 +121,12 @@ namespace Thinktecture.IdentityServer.WsFederation
 
             if (result.IsSignInRequired)
             {
+                Logger.Info("Redirecting to login page");
                 return RedirectToLogin(result);
             }
             if (result.IsError)
             {
+                Logger.Error(result.Error);
                 return BadRequest(result.Error);
             }
 
