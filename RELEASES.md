@@ -1,4 +1,11 @@
-# 1.1.0 (08 Februar 2015)
+# vNext
+
+ - [#25](https://github.com/IdentityServer/Thinktecture.IdentityServer3.WsFederation/issues/25) - SAML NameIdentifier is not emitted when name id format is not set +fix
+
+Commits: [...](https://github.com/identityserver/Thinktecture.IdentityServer3.WsFederation/compare/...)
+
+
+# 1.1.0 (08 Februar 2015) (08 Februar 2015)
 
  - [#20](https://github.com/IdentityServer/Thinktecture.IdentityServer3.WsFederation/issues/20) - [Question] Which Stores/Repositories are significant for WsFederation?
  - [#19](https://github.com/IdentityServer/Thinktecture.IdentityServer3.WsFederation/issues/19) - [Question] Is there a way to get custom WsFed parameters mapped over to SignInMessage for a custom UserService?
@@ -12,7 +19,7 @@
 Commits: [eead1ac7f2...6242e08f10](https://github.com/identityserver/Thinktecture.IdentityServer3.WsFederation/compare/eead1ac7f2...6242e08f10)
 
 
-# 1.0.0 (25 Januar 2015)
+# 1.0.0 (25 Januar 2015) (25 Januar 2015)
 
  - [#16](https://github.com/IdentityServer/Thinktecture.IdentityServer3.WsFederation/issues/16) - Add Web API & HTTP Logging (same as Core)
  - [#15](https://github.com/IdentityServer/Thinktecture.IdentityServer3.WsFederation/issues/15) - 404 for the Metadata Endpoint in RC
@@ -24,7 +31,7 @@ Commits: [eead1ac7f2...6242e08f10](https://github.com/identityserver/Thinktectur
 Commits: [52c21e856e...0ec30716c2](https://github.com/identityserver/Thinktecture.IdentityServer3.WsFederation/compare/52c21e856e...0ec30716c2)
 
 
-# rc (12 Januar 2015)
+# rc (12 Januar 2015) (12 Januar 2015)
 
  - [#9](https://github.com/IdentityServer/Thinktecture.IdentityServer3.WsFederation/issues/9) - Make SignInValidator to use WS-federation parameters provided by client
  - [#8](https://github.com/IdentityServer/Thinktecture.IdentityServer3.WsFederation/issues/8) - Federation Metadata exposure?
@@ -32,7 +39,7 @@ Commits: [52c21e856e...0ec30716c2](https://github.com/identityserver/Thinktectur
 Commits: [e5bd315eeb...8b5b61b84c](https://github.com/identityserver/Thinktecture.IdentityServer3.WsFederation/compare/e5bd315eeb...8b5b61b84c)
 
 
-# beta4 (14 Dezember 2014)
+# beta4 (14 Dezember 2014) (14 Dezember 2014)
 
  - [#7](https://github.com/IdentityServer/Thinktecture.IdentityServer3.WsFederation/pull/7) - Fixed #6 contributed by Dmitry Naumov ([DmitryNaumov](https://github.com/DmitryNaumov))
  - [#6](https://github.com/IdentityServer/Thinktecture.IdentityServer3.WsFederation/issues/6) - Package dependency to IdentityServer.v3 is broken +fix
@@ -42,7 +49,7 @@ Commits: [e5bd315eeb...8b5b61b84c](https://github.com/identityserver/Thinktectur
 Commits: [65921813fa...89d27cad71](https://github.com/identityserver/Thinktecture.IdentityServer3.WsFederation/compare/65921813fa...89d27cad71)
 
 
-# beta3 (28 Oktober 2014)
+# beta3 (28 Oktober 2014) (28 Oktober 2014)
 
  - [#2](https://github.com/IdentityServer/Thinktecture.IdentityServer3.WsFederation/pull/2) - Fix for NullReferenceException contributed by Eric Quist ([equist](https://github.com/equist)) +fix
 
