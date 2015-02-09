@@ -125,8 +125,9 @@ namespace Thinktecture.IdentityServer.WsFederation.ResponseHandling
                         if (!string.IsNullOrEmpty(validationResult.RelyingParty.SamlNameIdentifierFormat))
                         {
                             nameId.Properties[ClaimProperties.SamlNameIdentifierFormat] = validationResult.RelyingParty.SamlNameIdentifierFormat;
-                            mappedClaims.Add(nameId);
                         }
+
+                        mappedClaims.Add(nameId);
                     }
                     else
                     {
