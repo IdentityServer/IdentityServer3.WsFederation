@@ -176,7 +176,7 @@ namespace Thinktecture.IdentityServer.WsFederation.ResponseHandling
 
             if (validationResult.RelyingParty.EncryptingCertificate != null)
             {
-                descriptor.EncryptingCredentials = new X509EncryptingCredentials(validationResult.RelyingParty.EncryptingCertificate);
+                descriptor.EncryptingCredentials = new EncryptedKeyEncryptingCredentials(validationResult.RelyingParty.EncryptingCertificate);
             }
 
             return CreateSupportedSecurityTokenHandler().CreateToken(descriptor);
