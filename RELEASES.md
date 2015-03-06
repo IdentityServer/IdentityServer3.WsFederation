@@ -1,5 +1,6 @@
-# vNext
+# 1.1.2
 
+ - [#30](https://github.com/IdentityServer/Thinktecture.IdentityServer3.WsFederation/issues/30) - ID4178 when setting EncryptingCertificate on RelyingParty +fix
  - [#25](https://github.com/IdentityServer/Thinktecture.IdentityServer3.WsFederation/issues/25) - SAML NameIdentifier is not emitted when name id format is not set +fix
 
 Commits: [...](https://github.com/identityserver/Thinktecture.IdentityServer3.WsFederation/compare/...)
