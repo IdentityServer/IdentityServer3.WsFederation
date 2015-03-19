@@ -63,10 +63,15 @@ namespace Thinktecture.IdentityServer.WsFederation
         public async Task<IHttpActionResult> Get()
         {
             Logger.Info("Start WS-Federation request");
-            Logger.Debug(Request.RequestUri.AbsoluteUri);
+            Logger.DebugFormat("AbsoluteUri: [{0}]", Request.RequestUri.AbsoluteUri);
 
             WSFederationMessage message;
-            if (WSFederationMessage.TryCreateFromUri(Request.RequestUri, out message))
+
+            Uri publicRequestUri = GetPublicRequestUri();
+
+            Logger.DebugFormat("PublicUri: [{0}]", publicRequestUri);
+
+            if (WSFederationMessage.TryCreateFromUri(publicRequestUri, out message))
             {
                 var signin = message as SignInRequestMessage;
                 if (signin != null)
@@ -115,6 +120,21 @@ namespace Thinktecture.IdentityServer.WsFederation
             return new MetadataResult(entity);
         }
 
+        private Uri GetPublicRequestUri()
+        {
+            string identityServerHost = Request.GetOwinContext()
+                                               .Environment
+                                               .GetIdentityServerHost();
+
+            string pathAndQuery = Request.RequestUri.PathAndQuery;
+
+            string requestUriString = identityServerHost + pathAndQuery;
+
+            var requestUri = new Uri(requestUriString);
+
+            return requestUri;
+        }
+
         private async Task<IHttpActionResult> ProcessSignInAsync(SignInRequestMessage msg)
         {
             var result = await _validator.ValidateAsync(msg, User as ClaimsPrincipal);
@@ -138,8 +158,10 @@ namespace Thinktecture.IdentityServer.WsFederation
 
         IHttpActionResult RedirectToLogin(SignInValidationResult result)
         {
+            Uri publicRequestUri = GetPublicRequestUri();
+
             var message = new SignInMessage();
-            message.ReturnUrl = Request.RequestUri.AbsoluteUri;
+            message.ReturnUrl = publicRequestUri.ToString();
 
             if (!String.IsNullOrWhiteSpace(result.HomeRealm))
             {
