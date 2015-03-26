@@ -38,7 +38,7 @@ namespace Thinktecture.IdentityServer.WsFederation
     [HostAuthentication(Constants.PrimaryAuthenticationType)]
     [RoutePrefix("")]
     [NoCache]
-    [SecurityHeaders(EnableCsp=false)]
+    [SecurityHeaders(EnableCsp = false)]
     [EditorBrowsable(EditorBrowsableState.Never)]
     public class WsFederationController : ApiController
     {
@@ -65,8 +65,11 @@ namespace Thinktecture.IdentityServer.WsFederation
             Logger.Info("Start WS-Federation request");
             Logger.Debug(Request.RequestUri.AbsoluteUri);
 
+            var publicRequestUri = GetPublicRequestUri();
+            Logger.DebugFormat("PublicUri: [{0}]", publicRequestUri);
+
             WSFederationMessage message;
-            if (WSFederationMessage.TryCreateFromUri(Request.RequestUri, out message))
+            if (WSFederationMessage.TryCreateFromUri(publicRequestUri, out message))
             {
                 var signin = message as SignInRequestMessage;
                 if (signin != null)
@@ -138,8 +141,9 @@ namespace Thinktecture.IdentityServer.WsFederation
 
         IHttpActionResult RedirectToLogin(SignInValidationResult result)
         {
+            var publicRequestUri = GetPublicRequestUri();
             var message = new SignInMessage();
-            message.ReturnUrl = Request.RequestUri.AbsoluteUri;
+            message.ReturnUrl = publicRequestUri.ToString();
 
             if (!String.IsNullOrWhiteSpace(result.HomeRealm))
             {
@@ -150,11 +154,23 @@ namespace Thinktecture.IdentityServer.WsFederation
             {
                 message.AcrValues = new[] { result.Federation };
             }
-            
+
             var env = Request.GetOwinEnvironment();
             var url = env.CreateSignInRequest(message);
-            
+
             return Redirect(url);
+        }
+
+        private Uri GetPublicRequestUri()
+        {
+            var identityServerHost = Request.GetOwinContext()
+                                               .Environment
+                                               .GetIdentityServerHost();
+
+            var pathAndQuery = Request.RequestUri.PathAndQuery;
+            var requestUriString = identityServerHost + pathAndQuery;
+            var requestUri = new Uri(requestUriString);
+            return requestUri;
         }
     }
 }
