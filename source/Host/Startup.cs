@@ -25,7 +25,6 @@ namespace Host
 
                 var options = new IdentityServerOptions
                 {
-                    IssuerUri = "https://idsrv3.com",
                     SiteName = "IdentityServer3 with WS-Federation",
 
                     SigningCertificate = Certificate.Get(),
