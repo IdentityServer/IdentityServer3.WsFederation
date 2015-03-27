@@ -26,17 +26,11 @@ namespace Host
                 var options = new IdentityServerOptions
                 {
                     IssuerUri = "https://idsrv3.com",
-                    SiteName = "Thinktecture IdentityServer3 with WS-Federation",
+                    SiteName = "IdentityServer3 with WS-Federation",
 
                     SigningCertificate = Certificate.Get(),
                     Factory = factory,
                     PluginConfiguration = ConfigurePlugins,
-
-                    //LoggingOptions = new LoggingOptions
-                    //{
-                    //    EnableHttpLogging = true,
-                    //    EnableWebApiDiagnostics = true
-                    //}
                 };
 
                 coreApp.UseIdentityServer(options);

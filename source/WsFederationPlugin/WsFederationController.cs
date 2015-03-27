@@ -127,9 +127,7 @@ namespace Thinktecture.IdentityServer.WsFederation
                                                .GetIdentityServerHost();
 
             string pathAndQuery = Request.RequestUri.PathAndQuery;
-
             string requestUriString = identityServerHost + pathAndQuery;
-
             var requestUri = new Uri(requestUriString);
 
             return requestUri;
