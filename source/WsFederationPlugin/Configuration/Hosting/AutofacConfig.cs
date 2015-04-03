@@ -16,17 +16,17 @@
 
 using Autofac;
 using Autofac.Integration.WebApi;
+using IdentityServer3.Core.Configuration;
+using IdentityServer3.Core.Services;
+using IdentityServer3.WsFederation.Configuration.Hosting;
+using IdentityServer3.WsFederation.Hosting;
+using IdentityServer3.WsFederation.Logging;
+using IdentityServer3.WsFederation.ResponseHandling;
+using IdentityServer3.WsFederation.Validation;
 using Microsoft.Owin;
 using System;
-using Thinktecture.IdentityServer.Core.Configuration;
-using Thinktecture.IdentityServer.Core.Logging;
-using Thinktecture.IdentityServer.Core.Services;
-using Thinktecture.IdentityServer.WsFederation.Configuration.Hosting;
-using Thinktecture.IdentityServer.WsFederation.Hosting;
-using Thinktecture.IdentityServer.WsFederation.ResponseHandling;
-using Thinktecture.IdentityServer.WsFederation.Validation;
 
-namespace Thinktecture.IdentityServer.WsFederation.Configuration
+namespace IdentityServer3.WsFederation.Configuration
 {
     internal static class AutofacConfig
     {

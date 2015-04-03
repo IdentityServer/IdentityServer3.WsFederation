@@ -11,7 +11,7 @@ properties {
 	$nuget_path = "$src_directory\.nuget\nuget.exe"
 	
 	$buildNumber = 0;
-	$version = "1.1.3.0"
+	$version = "2.0.0.0"
 	$preRelease = $null
 }
 
@@ -47,19 +47,19 @@ task UpdateVersion {
 }
 
 task ILMerge -depends Compile {
-	$input_dlls = "$output_directory\Thinktecture.IdentityServer3.WsFederation.dll"
+	$input_dlls = "$output_directory\IdentityServer3.WsFederation.dll"
 
 	Get-ChildItem -Path $output_directory -Filter *.dll |
 		foreach-object {
-			if ("$_" -ne "Thinktecture.IdentityServer3.WsFederation.dll" -and
-				"$_" -ne "Thinktecture.IdentityServer3.dll" -and 
+			if ("$_" -ne "IdentityServer3.WsFederation.dll" -and
+				"$_" -ne "IdentityServer3.dll" -and 
 			    "$_" -ne "Owin.dll") {
 				$input_dlls = "$input_dlls $output_directory\$_"
 			}
 	}
 
 	New-Item $dist_directory\lib\net45 -Type Directory
-	Invoke-Expression "$ilmerge_path /targetplatform:v4 /internalize /allowDup /target:library /out:$dist_directory\lib\net45\Thinktecture.IdentityServer3.WsFederation.dll $input_dlls"
+	Invoke-Expression "$ilmerge_path /targetplatform:v4 /internalize /allowDup /target:library /out:$dist_directory\lib\net45\IdentityServer3.WsFederation.dll $input_dlls"
 }
 
 task CreateNuGetPackage -depends ILMerge {
@@ -80,7 +80,7 @@ task CreateNuGetPackage -depends ILMerge {
 		$packageVersion = $packageVersion + "-build" + $buildNumber.ToString().PadLeft(5,'0')
 	}
 
-	copy-item $src_directory\Thinktecture.IdentityServer3.WsFederation.nuspec $dist_directory
-	copy-item $output_directory\Thinktecture.IdentityServer3.WsFederation.xml $dist_directory\lib\net45\
-	exec { . $nuget_path pack $dist_directory\Thinktecture.IdentityServer3.WsFederation.nuspec -BasePath $dist_directory -o $dist_directory -version $packageVersion }
+	copy-item $src_directory\IdentityServer3.WsFederation.nuspec $dist_directory
+	copy-item $output_directory\IdentityServer3.WsFederation.xml $dist_directory\lib\net45\
+	exec { . $nuget_path pack $dist_directory\IdentityServer3.WsFederation.nuspec -BasePath $dist_directory -o $dist_directory -version $packageVersion }
 }

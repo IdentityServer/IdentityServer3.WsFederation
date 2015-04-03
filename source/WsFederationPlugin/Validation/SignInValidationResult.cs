@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
+using IdentityServer3.Core.Models;
+using IdentityServer3.WsFederation.Models;
 using System.ComponentModel;
 using System.IdentityModel.Services;
 using System.Security.Claims;
-using Thinktecture.IdentityServer.Core.Models;
-using Thinktecture.IdentityServer.WsFederation.Models;
 
 #pragma warning disable 1591
 
-namespace Thinktecture.IdentityServer.WsFederation.Validation
+namespace IdentityServer3.WsFederation.Validation
 {
     [EditorBrowsable(EditorBrowsableState.Never)]
     public class SignInValidationResult

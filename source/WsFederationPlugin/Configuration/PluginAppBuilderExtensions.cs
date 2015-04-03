@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
+using IdentityServer3.WsFederation.Configuration;
+using IdentityServer3.WsFederation.Hosting;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Owin;
 using System;
-using Thinktecture.IdentityServer.WsFederation.Configuration;
-using Thinktecture.IdentityServer.WsFederation.Hosting;
 
-namespace Thinktecture.IdentityServer.Core.Configuration
+namespace IdentityServer3.Core.Configuration
 {
     /// <summary>
     /// Extension methods for IAppBuilder to configure the WS-Federation plugin

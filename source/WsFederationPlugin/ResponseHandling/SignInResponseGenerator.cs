@@ -14,6 +14,12 @@
  * limitations under the License.
  */
 
+using IdentityServer3.Core;
+using IdentityServer3.Core.Configuration;
+using IdentityServer3.Core.Extensions;
+using IdentityServer3.Core.Services;
+using IdentityServer3.WsFederation.Logging;
+using IdentityServer3.WsFederation.Validation;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -24,16 +30,10 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Thinktecture.IdentityModel;
-using Thinktecture.IdentityServer.Core;
-using Thinktecture.IdentityServer.Core.Configuration;
-using Thinktecture.IdentityServer.Core.Extensions;
-using Thinktecture.IdentityServer.Core.Logging;
-using Thinktecture.IdentityServer.Core.Services;
-using Thinktecture.IdentityServer.WsFederation.Validation;
 
 #pragma warning disable 1591
 
-namespace Thinktecture.IdentityServer.WsFederation.ResponseHandling
+namespace IdentityServer3.WsFederation.ResponseHandling
 {
     [EditorBrowsable(EditorBrowsableState.Never)]
     public class SignInResponseGenerator

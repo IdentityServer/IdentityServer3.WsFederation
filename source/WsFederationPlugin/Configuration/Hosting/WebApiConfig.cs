@@ -14,17 +14,17 @@
  * limitations under the License.
  */
 
+using IdentityServer3.WsFederation.Hosting;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Controllers;
 using System.Web.Http.Dispatcher;
 using System.Web.Http.ExceptionHandling;
-using Thinktecture.IdentityServer.WsFederation.Hosting;
-using System.Linq;
-using System;
 
-namespace Thinktecture.IdentityServer.WsFederation.Configuration
+namespace IdentityServer3.WsFederation.Configuration
 {
     internal static class WebApiConfig
     {

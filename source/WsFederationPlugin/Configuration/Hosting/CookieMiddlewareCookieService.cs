@@ -14,17 +14,17 @@
  * limitations under the License.
  */
 
+using IdentityServer3.WsFederation.Logging;
 using Microsoft.Owin;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Thinktecture.IdentityServer.Core.Logging;
 
 #pragma warning disable 1591
 
-namespace Thinktecture.IdentityServer.WsFederation.Hosting
+namespace IdentityServer3.WsFederation.Hosting
 {
     [EditorBrowsable(EditorBrowsableState.Never)]
     public class CookieMiddlewareTrackingCookieService : ITrackingCookieService

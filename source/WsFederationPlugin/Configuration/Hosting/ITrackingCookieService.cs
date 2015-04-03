@@ -20,7 +20,7 @@ using System.Threading.Tasks;
 
 #pragma warning disable 1591
 
-namespace Thinktecture.IdentityServer.WsFederation.Hosting
+namespace IdentityServer3.WsFederation.Hosting
 {
     [EditorBrowsable(EditorBrowsableState.Never)]
     public interface ITrackingCookieService

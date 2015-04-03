@@ -14,18 +14,17 @@
  * limitations under the License.
  */
 
+using IdentityServer3.WsFederation.Logging;
+using IdentityServer3.WsFederation.Services;
 using System;
 using System.ComponentModel;
 using System.IdentityModel.Services;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Thinktecture.IdentityServer.Core.Logging;
-using Thinktecture.IdentityServer.WsFederation.Logging;
-using Thinktecture.IdentityServer.WsFederation.Services;
 
 #pragma warning disable 1591
 
-namespace Thinktecture.IdentityServer.WsFederation.Validation
+namespace IdentityServer3.WsFederation.Validation
 {
     [EditorBrowsable(EditorBrowsableState.Never)]
     public class SignInValidator

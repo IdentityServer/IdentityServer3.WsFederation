@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
+using IdentityServer3.WsFederation.Logging;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using Thinktecture.IdentityServer.Core.Logging;
 
-namespace Thinktecture.IdentityServer.WsFederation.Hosting
+namespace IdentityServer3.WsFederation.Hosting
 {
     internal class RequestResponseLogger : DelegatingHandler
     {

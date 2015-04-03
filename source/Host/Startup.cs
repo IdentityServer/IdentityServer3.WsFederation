@@ -1,12 +1,12 @@
 ﻿using Host.Config;
 using Owin;
 using System.Collections.Generic;
-using Thinktecture.IdentityServer.Core.Configuration;
-using Thinktecture.IdentityServer.Core.Logging;
-using Thinktecture.IdentityServer.Host.Config;
-using Thinktecture.IdentityServer.WsFederation.Configuration;
-using Thinktecture.IdentityServer.WsFederation.Models;
-using Thinktecture.IdentityServer.WsFederation.Services;
+using IdentityServer3.Core.Configuration;
+using IdentityServer3.Core.Logging;
+using IdentityServer3.Host.Config;
+using IdentityServer3.WsFederation.Configuration;
+using IdentityServer3.WsFederation.Models;
+using IdentityServer3.WsFederation.Services;
 
 namespace Host
 {

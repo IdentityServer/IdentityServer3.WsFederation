@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
+using IdentityServer3.WsFederation.Models;
 using System.Threading.Tasks;
-using Thinktecture.IdentityServer.WsFederation.Models;
 
-namespace Thinktecture.IdentityServer.WsFederation.Services
+namespace IdentityServer3.WsFederation.Services
 {
     /// <summary>
     /// Implements retrieval of relying party configuration

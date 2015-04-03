@@ -7,8 +7,8 @@
     <ProjectGuid>{4C93CD29-54C0-43CC-BF45-68E0DEC91CAA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Thinktecture.IdentityServer.WsFederation</RootNamespace>
-    <AssemblyName>Thinktecture.IdentityServer3.WsFederation</AssemblyName>
+    <RootNamespace>IdentityServer3.WsFederation</RootNamespace>
+    <AssemblyName>IdentityServer3.WsFederation</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -20,7 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\..\build\Thinktecture.IdentityServer3.WsFederation.XML</DocumentationFile>
+    <DocumentationFile>..\..\build\IdentityServer3.WsFederation.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -29,7 +29,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\..\build\Thinktecture.IdentityServer3.WsFederation.XML</DocumentationFile>
+    <DocumentationFile>..\..\build\IdentityServer3.WsFederation.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Autofac, Version=3.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
@@ -39,6 +39,9 @@
     <Reference Include="Autofac.Integration.WebApi, Version=3.4.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Autofac.WebApi2.3.4.0\lib\net45\Autofac.Integration.WebApi.dll</HintPath>
+    </Reference>
+    <Reference Include="IdentityServer3">
+      <HintPath>..\packages\IdentityServer3.2.0.0-build00012\lib\net45\IdentityServer3.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Owin, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -93,12 +96,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Thinktecture.IdentityModel.Core.1.4.0\lib\net45\Thinktecture.IdentityModel.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Thinktecture.IdentityServer3, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Thinktecture.IdentityServer3.1.3.0-build00154\lib\net45\Thinktecture.IdentityServer3.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Packages\LibLog.4.0\LibLog.cs" />
     <Compile Include="Configuration\Hosting\AutofacConfig.cs" />
     <Compile Include="Configuration\Hosting\AutofacDependencyResolver.cs" />
     <Compile Include="Configuration\Hosting\LibLogTraceListener.cs" />
@@ -114,6 +114,7 @@
     <Compile Include="Configuration\Hosting\LogProviderExceptionLogger.cs" />
     <Compile Include="Configuration\Hosting\NoCacheAttribute.cs" />
     <Compile Include="Configuration\Hosting\SecurityHeadersAttribute.cs" />
+    <Compile Include="Logging\LogSerializer.cs" />
     <Compile Include="Logging\Models\SignInValidationLog.cs" />
     <Compile Include="Models\RelyingParty.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

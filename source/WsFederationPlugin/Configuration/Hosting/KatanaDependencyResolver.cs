@@ -20,7 +20,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http.Hosting;
 
-namespace Thinktecture.IdentityServer.WsFederation.Hosting
+namespace IdentityServer3.WsFederation.Hosting
 {
     internal class KatanaDependencyResolver : DelegatingHandler
     {

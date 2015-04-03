@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
+using IdentityServer3.Core.Configuration;
 using System;
-using Thinktecture.IdentityServer.Core.Configuration;
 
-namespace Thinktecture.IdentityServer.WsFederation.Configuration
+namespace IdentityServer3.WsFederation.Configuration
 {
     /// <summary>
     /// WS-Federation plugin options

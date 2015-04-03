@@ -29,9 +29,9 @@ using Autofac;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-using Thinktecture.IdentityServer.Core.Services;
+using IdentityServer3.Core.Services;
 
-namespace Thinktecture.IdentityServer.WsFederation.Configuration.Hosting
+namespace IdentityServer3.WsFederation.Configuration.Hosting
 {
     internal class AutofacDependencyResolver : IDependencyResolver
     {

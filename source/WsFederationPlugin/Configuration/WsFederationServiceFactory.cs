@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
+using IdentityServer3.Core.Configuration;
+using IdentityServer3.Core.Services;
+using IdentityServer3.WsFederation.Logging;
+using IdentityServer3.WsFederation.Services;
 using System;
 using System.Collections.Generic;
-using Thinktecture.IdentityServer.Core.Configuration;
-using Thinktecture.IdentityServer.Core.Logging;
-using Thinktecture.IdentityServer.Core.Services;
-using Thinktecture.IdentityServer.WsFederation.Services;
 
-namespace Thinktecture.IdentityServer.WsFederation.Configuration
+namespace IdentityServer3.WsFederation.Configuration
 {
     /// <summary>
     /// The WS-Federation plugin service factory

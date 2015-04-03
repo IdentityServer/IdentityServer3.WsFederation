@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+using IdentityServer3.WsFederation.Logging;
 using System.ComponentModel;
 using System.IdentityModel.Services;
 using System.Net.Http;
@@ -21,11 +22,10 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http;
-using Thinktecture.IdentityServer.Core.Logging;
 
 #pragma warning disable 1591
 
-namespace Thinktecture.IdentityServer.WsFederation.Results
+namespace IdentityServer3.WsFederation.Results
 {
     [EditorBrowsable(EditorBrowsableState.Never)]
     public class SignInResult : IHttpActionResult

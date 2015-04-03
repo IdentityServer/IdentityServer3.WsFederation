@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
+using IdentityServer3.WsFederation.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Thinktecture.IdentityServer.WsFederation.Models;
 
-namespace Thinktecture.IdentityServer.WsFederation.Services
+namespace IdentityServer3.WsFederation.Services
 {
     /// <summary>
     /// In-memory service for relying party configuration

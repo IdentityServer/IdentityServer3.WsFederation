@@ -1,15 +1,15 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>Thinktecture.IdentityServer3.WsFederation</id>
+    <id>IdentityServer3.WsFederation</id>
     <version>0.0.0</version>
-    <title>Thinktecture IdentityServer3 - WS-Federation Plugin</title>
+    <title>IdentityServer3 - WS-Federation Plugin</title>
     <authors>Brock Allen, Dominick Baier</authors>
     <owners>Brock Allen, Dominick Baier</owners>
-    <projectUrl>https://github.com/identityserver/Thinktecture.IdentityServer3.WsFederation</projectUrl>
+    <projectUrl>https://github.com/identityserver/IdentityServer3.WsFederation</projectUrl>
     <iconUrl>https://identityserver.github.io/Documentation/assets/images/icons/IDserver_icon128.jpg</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <licenseUrl>https://github.com/IdentityServer/Thinktecture.IdentityServer3.WsFederation/blob/master/LICENSE</licenseUrl>
+    <licenseUrl>https://github.com/IdentityServer/IdentityServer3.WsFederation/blob/master/LICENSE</licenseUrl>
     <description>Plugin for adding WS-Federation Identity Provider capabilities to IdentityServer3</description>
     <copyright>Copyright 2015</copyright>
     <tags>Thinktecture IdentityServer OpenID Connect OpenIDConnect OAuth2 OWIN ASP.NET Katana WebApi SSO Federation Claims Identity WS-Federation</tags>
@@ -21,8 +21,7 @@
     </frameworkAssemblies>
 
     <dependencies>
-      <dependency id="Owin" version="1.0"/>
-      <dependency id="Thinktecture.IdentityServer3" version="1.1.0" /> 
+      <dependency id="Owin" version="1.0" />
     </dependencies>
   </metadata>
 </package>

@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-using Thinktecture.IdentityServer.Core.Extensions;
-using Thinktecture.IdentityServer.WsFederation.Validation;
+using IdentityServer3.Core.Extensions;
+using IdentityServer3.WsFederation.Validation;
 
-namespace Thinktecture.IdentityServer.WsFederation.Logging
+namespace IdentityServer3.WsFederation.Logging
 {
     internal class SignInValidationLog
     {

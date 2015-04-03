@@ -14,6 +14,15 @@
  * limitations under the License.
  */
 
+using IdentityServer3.Core;
+using IdentityServer3.Core.Extensions;
+using IdentityServer3.Core.Models;
+using IdentityServer3.WsFederation.Configuration;
+using IdentityServer3.WsFederation.Hosting;
+using IdentityServer3.WsFederation.Logging;
+using IdentityServer3.WsFederation.ResponseHandling;
+using IdentityServer3.WsFederation.Results;
+using IdentityServer3.WsFederation.Validation;
 using System;
 using System.ComponentModel;
 using System.IdentityModel.Services;
@@ -21,19 +30,10 @@ using System.Net.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web.Http;
-using Thinktecture.IdentityServer.Core;
-using Thinktecture.IdentityServer.Core.Extensions;
-using Thinktecture.IdentityServer.Core.Logging;
-using Thinktecture.IdentityServer.Core.Models;
-using Thinktecture.IdentityServer.WsFederation.Configuration;
-using Thinktecture.IdentityServer.WsFederation.Hosting;
-using Thinktecture.IdentityServer.WsFederation.ResponseHandling;
-using Thinktecture.IdentityServer.WsFederation.Results;
-using Thinktecture.IdentityServer.WsFederation.Validation;
 
 #pragma warning disable 1591
 
-namespace Thinktecture.IdentityServer.WsFederation
+namespace IdentityServer3.WsFederation
 {
     [HostAuthentication(Constants.PrimaryAuthenticationType)]
     [RoutePrefix("")]

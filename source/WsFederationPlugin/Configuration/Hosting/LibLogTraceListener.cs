@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
+using IdentityServer3.WsFederation.Logging;
 using System.Diagnostics;
-using Thinktecture.IdentityServer.Core.Logging;
 
-namespace Thinktecture.IdentityServer.WsFederation.Hosting
+namespace IdentityServer3.WsFederation.Hosting
 {
     internal class LibLogTraceListener : TraceListener
     {
