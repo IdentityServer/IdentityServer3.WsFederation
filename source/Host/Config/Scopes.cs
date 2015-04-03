@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using IdentityServer3.Core;
+﻿using IdentityServer3.Core;
 using IdentityServer3.Core.Models;
+using System.Collections.Generic;
 
 namespace IdentityServer3.Host.Config
 {

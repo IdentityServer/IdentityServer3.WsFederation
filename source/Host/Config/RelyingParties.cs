@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using IdentityServer3.WsFederation.Models;
+using System.Collections.Generic;
 using System.Security.Claims;
-using IdentityServer3.WsFederation.Models;
 
 namespace Host.Config
 {

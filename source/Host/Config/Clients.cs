@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Security.Claims;
-using IdentityServer3.Core;
+﻿using IdentityServer3.Core;
 using IdentityServer3.Core.Models;
+using System.Collections.Generic;
+using System.Security.Claims;
 
 namespace IdentityServer3.Host.Config
 {
