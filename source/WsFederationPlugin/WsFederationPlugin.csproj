@@ -98,7 +98,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Packages\LibLog.4.0\LibLog.cs" />
+    <Compile Include="App_Packages\LibLog.4.1\LibLog.cs" />
     <Compile Include="Configuration\Hosting\AutofacConfig.cs" />
     <Compile Include="Configuration\Hosting\AutofacDependencyResolver.cs" />
     <Compile Include="Configuration\Hosting\LibLogTraceListener.cs" />

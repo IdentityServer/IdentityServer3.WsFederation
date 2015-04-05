@@ -6,6 +6,7 @@ using IdentityServer3.WsFederation.Configuration;
 using IdentityServer3.WsFederation.Models;
 using IdentityServer3.WsFederation.Services;
 using Owin;
+using Serilog;
 using System.Collections.Generic;
 
 namespace Host
@@ -14,7 +15,10 @@ namespace Host
     {
         public void Configuration(IAppBuilder app)
         {
-            LogProvider.SetCurrentLogProvider(new DiagnosticsTraceLogProvider());
+            // setup serilog to use diagnostics trace
+            Log.Logger = new LoggerConfiguration()
+                .WriteTo.Trace()
+                .CreateLogger();
 
             app.Map("/core", coreApp =>
             {
