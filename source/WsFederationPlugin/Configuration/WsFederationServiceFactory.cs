@@ -78,6 +78,15 @@ namespace IdentityServer3.WsFederation.Configuration
         /// </value>
         public Registration<IRelyingPartyService> RelyingPartyService { get; set; }
 
+        // optional
+        /// <summary>
+        /// Gets or sets the custom request validator service.
+        /// </summary>
+        /// <value>
+        /// The custom request validator service.
+        /// </value>
+        public Registration<ICustomWsFederationRequestValidator> CustomRequestValidator { get; set; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="WsFederationServiceFactory"/> class.
         /// </summary>

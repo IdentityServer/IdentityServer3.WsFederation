@@ -41,7 +41,7 @@
       <HintPath>..\packages\Autofac.WebApi2.3.4.0\lib\net45\Autofac.Integration.WebApi.dll</HintPath>
     </Reference>
     <Reference Include="IdentityServer3">
-      <HintPath>..\packages\IdentityServer3.2.0.0-build00012\lib\net45\IdentityServer3.dll</HintPath>
+      <HintPath>..\packages\IdentityServer3.2.0.0-beta1\lib\net45\IdentityServer3.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Owin, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -123,9 +123,11 @@
     <Compile Include="Results\MetadataResult.cs" />
     <Compile Include="Results\SignInResult.cs" />
     <Compile Include="Results\SignOutResult.cs" />
+    <Compile Include="Services\DefaultCustomWsFederationRequestValidator.cs" />
     <Compile Include="Services\InMemoryRelyingPartyService.cs" />
     <Compile Include="Services\IRelyingPartyService.cs" />
     <Compile Include="Configuration\Hosting\ITrackingCookieService.cs" />
+    <Compile Include="Services\ICustomWsFederationRequestValidator.cs" />
     <Compile Include="Validation\SignInValidationResult.cs" />
     <Compile Include="Validation\SignInValidator.cs" />
     <Compile Include="WsFederationController.cs" />
