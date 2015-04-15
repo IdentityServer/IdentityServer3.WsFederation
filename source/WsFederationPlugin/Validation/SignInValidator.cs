@@ -31,10 +31,12 @@ namespace IdentityServer3.WsFederation.Validation
     {
         private readonly static ILog Logger = LogProvider.GetCurrentClassLogger();
         private readonly IRelyingPartyService _relyingParties;
+        private readonly ICustomWsFederationRequestValidator _customValidator;
 
-        public SignInValidator(IRelyingPartyService relyingParties)
+        public SignInValidator(IRelyingPartyService relyingParties, ICustomWsFederationRequestValidator customValidator)
         {
             _relyingParties = relyingParties;
+            _customValidator = customValidator;
         }
 
         public async Task<SignInValidationResult> ValidateAsync(SignInRequestMessage message, ClaimsPrincipal subject)
@@ -78,6 +80,18 @@ namespace IdentityServer3.WsFederation.Validation
             result.RelyingParty = rp;
             result.SignInRequestMessage = message;
             result.Subject = subject;
+
+            var customResult = await _customValidator.ValidateSignInRequestAsync(result);
+            if (customResult.IsError)
+            {
+                LogError("Error in custom validation: " + customResult.Error, result);
+                return new SignInValidationResult
+                    {
+                        IsError = true,
+                        Error = customResult.Error,
+                        ErrorMessage = customResult.ErrorMessage,
+                    };
+            }
 
             LogSuccess(result);
             return result;
