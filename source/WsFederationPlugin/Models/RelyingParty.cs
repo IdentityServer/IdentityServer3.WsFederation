@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+using IdentityModel.Constants;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens;
 using System.Security.Cryptography.X509Certificates;

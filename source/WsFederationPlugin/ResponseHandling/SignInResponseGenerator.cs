@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+using IdentityModel.Tokens;
 using IdentityServer3.Core;
 using IdentityServer3.Core.Configuration;
 using IdentityServer3.Core.Extensions;

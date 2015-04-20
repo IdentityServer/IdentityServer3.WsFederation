@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+using IdentityModel.Constants;
 using IdentityServer3.Core.Configuration;
 using System;
 using System.ComponentModel;
