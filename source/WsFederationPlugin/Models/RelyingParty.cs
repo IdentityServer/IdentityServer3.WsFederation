@@ -18,7 +18,6 @@ using IdentityModel.Constants;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens;
 using System.Security.Cryptography.X509Certificates;
-using Thinktecture.IdentityModel.Constants;
 
 namespace IdentityServer3.WsFederation.Models
 {

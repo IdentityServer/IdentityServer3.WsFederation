@@ -18,6 +18,7 @@ using IdentityModel.Tokens;
 using IdentityServer3.Core;
 using IdentityServer3.Core.Configuration;
 using IdentityServer3.Core.Extensions;
+using IdentityServer3.Core.Models;
 using IdentityServer3.Core.Services;
 using IdentityServer3.WsFederation.Logging;
 using IdentityServer3.WsFederation.Validation;
@@ -30,7 +31,6 @@ using System.IdentityModel.Tokens;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Thinktecture.IdentityModel;
 
 #pragma warning disable 1591
 
@@ -92,10 +92,13 @@ namespace IdentityServer3.WsFederation.ResponseHandling
             // get all claims from user service
             if (validationResult.RelyingParty.IncludeAllClaimsForUser)
             {
-                var claims = await _users.GetProfileDataAsync(
-                    validationResult.Subject);
-
-                profileClaims = claims.ToList();
+                var ctx = new ProfileDataRequestContext
+                {
+                    Subject = validationResult.Subject
+                };
+                await _users.GetProfileDataAsync(ctx);
+                
+                profileClaims = ctx.IssuedClaims.ToList();
             }
             else
             {
@@ -104,11 +107,14 @@ namespace IdentityServer3.WsFederation.ResponseHandling
 
                 if (claimTypes.Any())
                 {
-                    var claims = await _users.GetProfileDataAsync(
-                        validationResult.Subject,
-                        claimTypes);
+                    var ctx = new ProfileDataRequestContext
+                    {
+                        Subject = validationResult.Subject,
+                        RequestedClaimTypes = claimTypes
+                    };
+                    await _users.GetProfileDataAsync(ctx);
 
-                    profileClaims = claims.ToList();
+                    profileClaims = ctx.IssuedClaims.ToList();
                 }
             }
             

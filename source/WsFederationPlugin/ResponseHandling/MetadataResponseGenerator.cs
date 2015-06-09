@@ -21,7 +21,6 @@ using System.ComponentModel;
 using System.IdentityModel.Metadata;
 using System.IdentityModel.Protocols.WSTrust;
 using System.IdentityModel.Tokens;
-using Thinktecture.IdentityModel.Constants;
 
 #pragma warning disable 1591
 
