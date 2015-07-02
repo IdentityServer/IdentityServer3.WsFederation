@@ -22,6 +22,8 @@
 
     <dependencies>
       <dependency id="Owin" version="1.0" />
+      <dependency id="IdentityServer3" version="2.0.0-rc1"  />
+      <dependency id="IdentityModel" version="1.0.0-beta4" />
     </dependencies>
   </metadata>
 </package>
