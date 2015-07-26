@@ -17,7 +17,7 @@ namespace Host
         {
             // setup serilog to use diagnostics trace
             Log.Logger = new LoggerConfiguration()
-                .WriteTo.Trace()
+                .WriteTo.Trace(outputTemplate: "{Timestamp} [{Level}] ({Name}){NewLine} {Message}{NewLine}{Exception}")
                 .CreateLogger();
 
             app.Map("/core", coreApp =>
