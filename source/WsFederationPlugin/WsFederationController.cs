@@ -84,9 +84,7 @@ namespace IdentityServer3.WsFederation
                 if (signout != null)
                 {
                     Logger.Info("WsFederation signout request");
-
-                    var url = this.Request.GetOwinContext().Environment.GetIdentityServerLogoutUrl();
-                    return Redirect(url);
+                    return RedirectToLogOut(signout);
                 }
             }
 
@@ -153,7 +151,7 @@ namespace IdentityServer3.WsFederation
 
             return new SignInResult(responseMessage);
         }
-
+        
         IHttpActionResult RedirectToLogin(SignInValidationResult result)
         {
             Uri publicRequestUri = GetPublicRequestUri();
@@ -175,6 +173,25 @@ namespace IdentityServer3.WsFederation
             var url = env.CreateSignInRequest(message);
             
             return Redirect(url);
+        }
+
+        IHttpActionResult RedirectToLogOut(SignOutRequestMessage msg)
+        {
+            var env = Request.GetOwinEnvironment();
+
+            if (!String.IsNullOrWhiteSpace(msg.Reply))
+            {
+                var message = new SignOutMessage
+                {
+                    ReturnUrl = msg.Reply
+                };
+                
+                var url = env.CreateSignOutRequest(message);
+
+                return Redirect(url);
+            }
+
+            return Redirect(env.GetIdentityServerLogoutUrl());
         }
     }
 }
