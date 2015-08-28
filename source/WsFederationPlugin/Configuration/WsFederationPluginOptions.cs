@@ -16,6 +16,7 @@
 
 using IdentityServer3.Core.Configuration;
 using System;
+using System.Collections.Generic;
 
 namespace IdentityServer3.WsFederation.Configuration
 {
@@ -42,6 +43,11 @@ namespace IdentityServer3.WsFederation.Configuration
                 return MapPath + "/signout";
             }
         }
+
+        /// <summary>
+        /// Specifies allowed URIs to redirect to after logout
+        /// </summary>
+        public List<string> PostLogoutRedirectUris { get; set; }
 
         /// <summary>
         /// Gets or sets the identity server options.
@@ -94,6 +100,7 @@ namespace IdentityServer3.WsFederation.Configuration
         /// </summary>
         public WsFederationPluginOptions()
         {
+            PostLogoutRedirectUris = new List<string>();
             MapPath = "/wsfed";
             EnableMetadataEndpoint = true;
         }

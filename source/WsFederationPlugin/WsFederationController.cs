@@ -23,6 +23,7 @@ using IdentityServer3.WsFederation.Logging;
 using IdentityServer3.WsFederation.ResponseHandling;
 using IdentityServer3.WsFederation.Results;
 using IdentityServer3.WsFederation.Validation;
+using IdentityServer3.WsFederation.Services;
 using System;
 using System.ComponentModel;
 using System.IdentityModel.Services;
@@ -45,18 +46,20 @@ namespace IdentityServer3.WsFederation
         private readonly static ILog Logger = LogProvider.GetCurrentClassLogger();
 
         private readonly SignInValidator _validator;
+        private readonly IRedirectUriValidator _redirectUriValidator;
         private readonly SignInResponseGenerator _signInResponseGenerator;
         private readonly MetadataResponseGenerator _metadataResponseGenerator;
         private readonly ITrackingCookieService _cookies;
         private readonly WsFederationPluginOptions _wsFedOptions;
 
-        public WsFederationController(SignInValidator validator, SignInResponseGenerator signInResponseGenerator, MetadataResponseGenerator metadataResponseGenerator, ITrackingCookieService cookies, WsFederationPluginOptions wsFedOptions)
+        public WsFederationController(SignInValidator validator, SignInResponseGenerator signInResponseGenerator, MetadataResponseGenerator metadataResponseGenerator, ITrackingCookieService cookies, WsFederationPluginOptions wsFedOptions, IRedirectUriValidator redirectUriValidator)
         {
             _validator = validator;
             _signInResponseGenerator = signInResponseGenerator;
             _metadataResponseGenerator = metadataResponseGenerator;
             _cookies = cookies;
             _wsFedOptions = wsFedOptions;
+            _redirectUriValidator = redirectUriValidator;
         }
 
         [Route("")]
@@ -84,7 +87,7 @@ namespace IdentityServer3.WsFederation
                 if (signout != null)
                 {
                     Logger.Info("WsFederation signout request");
-                    return RedirectToLogOut(signout);
+                    return await ProcessSignOutAsync(signout);
                 }
             }
 
@@ -151,7 +154,24 @@ namespace IdentityServer3.WsFederation
 
             return new SignInResult(responseMessage);
         }
-        
+
+        private async Task<IHttpActionResult> ProcessSignOutAsync(SignOutRequestMessage msg)
+        {
+            if (String.IsNullOrWhiteSpace(msg.Reply))
+            {
+                return RedirectToLogOut();
+            }
+
+            if (await _redirectUriValidator.IsPostLogoutRedirectUriValidAsync(msg.Reply) == false)
+            {
+                const string error = "invalid_signout_reply_uri";
+                Logger.Error(error);
+                return BadRequest(error);
+            }
+
+            return RedirectToLogOut(msg.Reply);
+        }
+
         IHttpActionResult RedirectToLogin(SignInValidationResult result)
         {
             Uri publicRequestUri = GetPublicRequestUri();
@@ -175,23 +195,22 @@ namespace IdentityServer3.WsFederation
             return Redirect(url);
         }
 
-        IHttpActionResult RedirectToLogOut(SignOutRequestMessage msg)
+        IHttpActionResult RedirectToLogOut()
         {
-            var env = Request.GetOwinEnvironment();
+            return Redirect(Request.GetOwinEnvironment().GetIdentityServerLogoutUrl());
+        }
 
-            if (!String.IsNullOrWhiteSpace(msg.Reply))
+        IHttpActionResult RedirectToLogOut(string returnUrl)
+        {
+            var message = new SignOutMessage
             {
-                var message = new SignOutMessage
-                {
-                    ReturnUrl = msg.Reply
-                };
-                
-                var url = env.CreateSignOutRequest(message);
+                ReturnUrl = returnUrl
+            };
 
-                return Redirect(url);
-            }
+            var env = Request.GetOwinEnvironment();
+            var url = env.CreateSignOutRequest(message);
 
-            return Redirect(env.GetIdentityServerLogoutUrl());
+            return Redirect(url);
         }
     }
 }

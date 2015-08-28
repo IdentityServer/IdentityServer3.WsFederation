@@ -51,6 +51,7 @@ namespace IdentityServer3.WsFederation.Configuration
 
             // validators
             builder.RegisterType<SignInValidator>().AsSelf();
+            builder.RegisterType<DefaultRedirectUriValidator>().As<Services.IRedirectUriValidator>();
 
             // processors
             builder.RegisterType<SignInResponseGenerator>().AsSelf();
