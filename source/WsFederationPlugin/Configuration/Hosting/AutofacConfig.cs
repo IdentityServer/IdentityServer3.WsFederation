@@ -48,10 +48,10 @@ namespace IdentityServer3.WsFederation.Configuration
 
             // optional from factory
             builder.RegisterDefaultType<ICustomWsFederationRequestValidator, DefaultCustomWsFederationRequestValidator>(factory.CustomRequestValidator);
+            builder.RegisterDefaultType<Services.IRedirectUriValidator, DefaultRedirectUriValidator>(factory.RedirectUriValidator);
 
             // validators
             builder.RegisterType<SignInValidator>().AsSelf();
-            builder.RegisterType<DefaultRedirectUriValidator>().As<Services.IRedirectUriValidator>();
 
             // processors
             builder.RegisterType<SignInResponseGenerator>().AsSelf();
