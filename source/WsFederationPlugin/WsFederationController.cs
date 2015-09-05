@@ -38,8 +38,8 @@ namespace IdentityServer3.WsFederation
     [HostAuthentication(Constants.PrimaryAuthenticationType)]
     [RoutePrefix("")]
     [NoCache]
-    [SecurityHeaders(EnableCsp=false)]
     [EditorBrowsable(EditorBrowsableState.Never)]
+    [SecurityHeaders(EnableCsp = false)]
     public class WsFederationController : ApiController
     {
         private readonly static ILog Logger = LogProvider.GetCurrentClassLogger();
@@ -60,6 +60,7 @@ namespace IdentityServer3.WsFederation
         }
 
         [Route("")]
+        [SecurityHeaders(EnableCsp = false, EnableXfo = false)]
         public async Task<IHttpActionResult> Get()
         {
             Logger.Info("Start WS-Federation request");
