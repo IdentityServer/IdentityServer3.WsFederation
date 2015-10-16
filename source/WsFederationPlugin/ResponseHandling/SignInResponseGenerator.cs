@@ -94,7 +94,8 @@ namespace IdentityServer3.WsFederation.ResponseHandling
             {
                 var ctx = new ProfileDataRequestContext
                 {
-                    Subject = validationResult.Subject
+                    Subject = validationResult.Subject,
+                    AllClaimsRequested = true
                 };
                 await _users.GetProfileDataAsync(ctx);
                 
