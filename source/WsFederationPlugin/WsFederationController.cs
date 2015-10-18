@@ -160,7 +160,7 @@ namespace IdentityServer3.WsFederation
             Uri publicRequestUri = GetPublicRequestUri();
 
             var message = new SignInMessage();
-            message.ReturnUrl = publicRequestUri.ToString();
+            message.ReturnUrl = publicRequestUri.AbsoluteUri;
 
             if (!String.IsNullOrWhiteSpace(result.HomeRealm))
             {
