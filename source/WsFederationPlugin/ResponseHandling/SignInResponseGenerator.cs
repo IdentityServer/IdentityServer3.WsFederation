@@ -22,6 +22,7 @@ using IdentityServer3.Core.Models;
 using IdentityServer3.Core.Services;
 using IdentityServer3.WsFederation.Logging;
 using IdentityServer3.WsFederation.Validation;
+using IdentityServer3.WsFederation.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -42,11 +43,13 @@ namespace IdentityServer3.WsFederation.ResponseHandling
         private readonly static ILog Logger = LogProvider.GetCurrentClassLogger();
         private readonly IdentityServerOptions _options;
         private readonly IUserService _users;
-        
-        public SignInResponseGenerator(IdentityServerOptions options, IUserService users)
+        private readonly ICustomWsFederationClaimsService _customClaimsService;
+
+        public SignInResponseGenerator(IdentityServerOptions options, IUserService users, ICustomWsFederationClaimsService customClaimsService)
         {
             _options = options;
             _users = users;
+            _customClaimsService = customClaimsService;
         }
 
         public async Task<SignInResponseMessage> GenerateResponseAsync(SignInValidationResult validationResult)
@@ -165,8 +168,11 @@ namespace IdentityServer3.WsFederation.ResponseHandling
                 mappedClaims.Add(new Claim(ClaimTypes.AuthenticationMethod, AuthenticationMethods.Password));
                 mappedClaims.Add(AuthenticationInstantClaim.Now);
             }
-            
-            return new ClaimsIdentity(mappedClaims, "idsrv");
+
+            // let the custom claims service transform the claims collection
+            var finalClaims = new List<Claim>(await _customClaimsService.TransformClaimsAsync(validationResult, mappedClaims));
+
+            return new ClaimsIdentity(finalClaims, "idsrv");
         }
 
         private SecurityToken CreateSecurityToken(SignInValidationResult validationResult, ClaimsIdentity outgoingSubject)
