@@ -38,11 +38,13 @@ namespace IdentityServer3.WsFederation.ResponseHandling
 
         public EntityDescriptor Generate(string wsfedEndpoint)
         {
+            var applicationDescriptor = GetApplicationDescriptor(wsfedEndpoint);
             var tokenServiceDescriptor = GetTokenServiceDescriptor(wsfedEndpoint);
 
             var id = new EntityId(_options.IssuerUri);
             var entity = new EntityDescriptor(id);
             entity.SigningCredentials = new X509SigningCredentials(_options.SigningCertificate);
+            entity.RoleDescriptors.Add(applicationDescriptor);
             entity.RoleDescriptors.Add(tokenServiceDescriptor);
 
             return entity;
@@ -66,6 +68,25 @@ namespace IdentityServer3.WsFederation.ResponseHandling
             return tokenService;
         }
 
+        private ApplicationServiceDescriptor GetApplicationDescriptor(string wsfedEndpoint)
+        {
+            var tokenService = new ApplicationServiceDescriptor();
+            tokenService.ServiceDescription = _options.SiteName;
+            tokenService.Keys.Add(GetEncryptionDescriptor());
+            tokenService.Keys.Add(GetSigningKeyDescriptor());
+
+            tokenService.PassiveRequestorEndpoints.Add(new EndpointReference(wsfedEndpoint));
+            tokenService.Endpoints.Add(new EndpointReference(wsfedEndpoint));
+
+            tokenService.TokenTypesOffered.Add(new Uri(TokenTypes.OasisWssSaml11TokenProfile11));
+            tokenService.TokenTypesOffered.Add(new Uri(TokenTypes.OasisWssSaml2TokenProfile11));
+            tokenService.TokenTypesOffered.Add(new Uri(TokenTypes.JsonWebToken));
+
+            tokenService.ProtocolsSupported.Add(new Uri("http://docs.oasis-open.org/wsfed/federation/200706"));
+
+            return tokenService;
+        }
+
         private KeyDescriptor GetSigningKeyDescriptor()
         {
             var certificate = _options.SigningCertificate;
@@ -73,6 +94,17 @@ namespace IdentityServer3.WsFederation.ResponseHandling
             var clause = new X509SecurityToken(certificate).CreateKeyIdentifierClause<X509RawDataKeyIdentifierClause>();
             var key = new KeyDescriptor(new SecurityKeyIdentifier(clause));
             key.Use = KeyType.Signing;
+
+            return key;
+        }
+
+        private KeyDescriptor GetEncryptionDescriptor()
+        {
+            var certificate = _options.SigningCertificate;
+
+            var clause = new X509SecurityToken(certificate).CreateKeyIdentifierClause<X509RawDataKeyIdentifierClause>();
+            var key = new KeyDescriptor(new SecurityKeyIdentifier(clause));
+            key.Use = KeyType.Encryption;
 
             return key;
         }
