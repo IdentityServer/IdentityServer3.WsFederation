@@ -16,11 +16,15 @@
 
 using IdentityModel.Constants;
 using IdentityServer3.Core.Configuration;
+using IdentityServer3.Core.Extensions;
+using IdentityServer3.Core.Services;
+using Microsoft.Owin;
 using System;
 using System.ComponentModel;
 using System.IdentityModel.Metadata;
 using System.IdentityModel.Protocols.WSTrust;
 using System.IdentityModel.Tokens;
+using System.Collections.Generic;
 
 #pragma warning disable 1591
 
@@ -30,10 +34,27 @@ namespace IdentityServer3.WsFederation.ResponseHandling
     public class MetadataResponseGenerator
     {
         private readonly IdentityServerOptions _options;
+        private readonly IDictionary<string, object> _environment;
 
-        public MetadataResponseGenerator(IdentityServerOptions options)
+        public MetadataResponseGenerator(IdentityServerOptions options, OwinEnvironmentService owin)
         {
             _options = options;
+            _environment = owin.Environment;
+        }
+
+        private string IssuerUri
+        {
+            get
+            {
+                var uri = _options.IssuerUri;
+                if (String.IsNullOrWhiteSpace(uri))
+                {
+                    uri = _environment.GetIdentityServerBaseUrl();
+                    if (uri.EndsWith("/")) uri = uri.Substring(0, uri.Length - 1);
+                }
+
+                return uri;
+            }
         }
 
         public EntityDescriptor Generate(string wsfedEndpoint)
@@ -41,7 +62,7 @@ namespace IdentityServer3.WsFederation.ResponseHandling
             var applicationDescriptor = GetApplicationDescriptor(wsfedEndpoint);
             var tokenServiceDescriptor = GetTokenServiceDescriptor(wsfedEndpoint);
 
-            var id = new EntityId(_options.IssuerUri);
+            var id = new EntityId(IssuerUri);
             var entity = new EntityDescriptor(id);
             entity.SigningCredentials = new X509SigningCredentials(_options.SigningCertificate);
             entity.RoleDescriptors.Add(applicationDescriptor);
