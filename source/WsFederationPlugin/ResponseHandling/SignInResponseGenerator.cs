@@ -42,11 +42,28 @@ namespace IdentityServer3.WsFederation.ResponseHandling
         private readonly static ILog Logger = LogProvider.GetCurrentClassLogger();
         private readonly IdentityServerOptions _options;
         private readonly IUserService _users;
-        
-        public SignInResponseGenerator(IdentityServerOptions options, IUserService users)
+        private readonly IDictionary<string, object> _environment;
+
+        public SignInResponseGenerator(IdentityServerOptions options, IUserService users, OwinEnvironmentService owinEnvironment)
         {
             _options = options;
             _users = users;
+            _environment = owinEnvironment.Environment;
+        }
+
+        private string IssuerUri
+        {
+            get
+            {
+                var uri = _options.IssuerUri;
+                if (String.IsNullOrWhiteSpace(uri))
+                {
+                    uri = _environment.GetIdentityServerBaseUrl();
+                    if (uri.EndsWith("/")) uri = uri.Substring(0, uri.Length - 1);
+                }
+
+                return uri;
+            }
         }
 
         public async Task<SignInResponseMessage> GenerateResponseAsync(SignInValidationResult validationResult)
@@ -94,7 +111,8 @@ namespace IdentityServer3.WsFederation.ResponseHandling
             {
                 var ctx = new ProfileDataRequestContext
                 {
-                    Subject = validationResult.Subject
+                    Subject = validationResult.Subject,
+                    AllClaimsRequested = true
                 };
                 await _users.GetProfileDataAsync(ctx);
                 
@@ -177,13 +195,13 @@ namespace IdentityServer3.WsFederation.ResponseHandling
                 ReplyToAddress = validationResult.ReplyUrl,
                 SigningCredentials = new X509SigningCredentials(_options.SigningCertificate, validationResult.RelyingParty.SignatureAlgorithm, validationResult.RelyingParty.DigestAlgorithm),
                 Subject = outgoingSubject,
-                TokenIssuerName = _options.IssuerUri,
+                TokenIssuerName = IssuerUri,
                 TokenType = validationResult.RelyingParty.TokenType
             };
 
             if (validationResult.RelyingParty.EncryptingCertificate != null)
             {
-                descriptor.EncryptingCredentials = new X509EncryptingCredentials(validationResult.RelyingParty.EncryptingCertificate);
+                descriptor.EncryptingCredentials = new EncryptedKeyEncryptingCredentials(validationResult.RelyingParty.EncryptingCertificate);
             }
 
             return CreateSupportedSecurityTokenHandler().CreateToken(descriptor);

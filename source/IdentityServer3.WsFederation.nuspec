@@ -23,7 +23,6 @@
     <dependencies>
       <dependency id="Owin" version="1.0" />
       <dependency id="IdentityServer3" version="2.0.0"  />
-      <dependency id="IdentityModel" version="1.0.0" />
     </dependencies>
   </metadata>
 </package>

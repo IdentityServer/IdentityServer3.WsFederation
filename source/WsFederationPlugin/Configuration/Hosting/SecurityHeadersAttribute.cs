@@ -32,6 +32,14 @@ namespace IdentityServer3.WsFederation.Hosting
         public bool EnableCto { get; set; }
         public bool EnableCsp { get; set; }
 
+        public override bool AllowMultiple
+        {
+            get
+            {
+                return false;
+            }
+        }
+
         public override void OnActionExecuted(HttpActionExecutedContext actionExecutedContext)
         {
             base.OnActionExecuted(actionExecutedContext);
