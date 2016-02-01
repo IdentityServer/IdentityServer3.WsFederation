@@ -18,13 +18,13 @@ using IdentityModel.Constants;
 using IdentityServer3.Core.Configuration;
 using IdentityServer3.Core.Extensions;
 using IdentityServer3.Core.Services;
-using Microsoft.Owin;
 using System;
 using System.ComponentModel;
 using System.IdentityModel.Metadata;
 using System.IdentityModel.Protocols.WSTrust;
 using System.IdentityModel.Tokens;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 
 #pragma warning disable 1591
 
@@ -75,7 +75,11 @@ namespace IdentityServer3.WsFederation.ResponseHandling
         {
             var tokenService = new SecurityTokenServiceDescriptor();
             tokenService.ServiceDescription = _options.SiteName;
-            tokenService.Keys.Add(GetSigningKeyDescriptor());
+            tokenService.Keys.Add(GetSigningKeyDescriptor(_options.SigningCertificate));
+            if (_options.SecondarySigningCertificate != null)
+            {
+                tokenService.Keys.Add(GetSigningKeyDescriptor(_options.SecondarySigningCertificate));
+            }
 
             tokenService.PassiveRequestorEndpoints.Add(new EndpointReference(wsfedEndpoint));
             tokenService.SecurityTokenServiceEndpoints.Add(new EndpointReference(wsfedEndpoint));
@@ -93,8 +97,13 @@ namespace IdentityServer3.WsFederation.ResponseHandling
         {
             var tokenService = new ApplicationServiceDescriptor();
             tokenService.ServiceDescription = _options.SiteName;
-            tokenService.Keys.Add(GetEncryptionDescriptor());
-            tokenService.Keys.Add(GetSigningKeyDescriptor());
+            tokenService.Keys.Add(GetEncryptionDescriptor(_options.SigningCertificate));
+            tokenService.Keys.Add(GetSigningKeyDescriptor(_options.SigningCertificate));
+            if (_options.SecondarySigningCertificate != null)
+            {
+                tokenService.Keys.Add(GetEncryptionDescriptor(_options.SecondarySigningCertificate));
+                tokenService.Keys.Add(GetSigningKeyDescriptor(_options.SecondarySigningCertificate));
+            }
 
             tokenService.PassiveRequestorEndpoints.Add(new EndpointReference(wsfedEndpoint));
             tokenService.Endpoints.Add(new EndpointReference(wsfedEndpoint));
@@ -108,10 +117,8 @@ namespace IdentityServer3.WsFederation.ResponseHandling
             return tokenService;
         }
 
-        private KeyDescriptor GetSigningKeyDescriptor()
+        private KeyDescriptor GetSigningKeyDescriptor(X509Certificate2 certificate)
         {
-            var certificate = _options.SigningCertificate;
-
             var clause = new X509SecurityToken(certificate).CreateKeyIdentifierClause<X509RawDataKeyIdentifierClause>();
             var key = new KeyDescriptor(new SecurityKeyIdentifier(clause));
             key.Use = KeyType.Signing;
@@ -119,10 +126,8 @@ namespace IdentityServer3.WsFederation.ResponseHandling
             return key;
         }
 
-        private KeyDescriptor GetEncryptionDescriptor()
+        private KeyDescriptor GetEncryptionDescriptor(X509Certificate2 certificate)
         {
-            var certificate = _options.SigningCertificate;
-
             var clause = new X509SecurityToken(certificate).CreateKeyIdentifierClause<X509RawDataKeyIdentifierClause>();
             var key = new KeyDescriptor(new SecurityKeyIdentifier(clause));
             key.Use = KeyType.Encryption;
