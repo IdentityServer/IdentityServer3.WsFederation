@@ -117,6 +117,7 @@
     <Compile Include="Configuration\Hosting\SecurityHeadersAttribute.cs" />
     <Compile Include="Logging\LogSerializer.cs" />
     <Compile Include="Logging\Models\SignInValidationLog.cs" />
+    <Compile Include="Logging\Models\SignOutValidationLog.cs" />
     <Compile Include="Models\RelyingParty.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResponseHandling\MetadataResponseGenerator.cs" />
@@ -125,12 +126,16 @@
     <Compile Include="Results\SignInResult.cs" />
     <Compile Include="Results\SignOutResult.cs" />
     <Compile Include="Services\DefaultCustomWsFederationRequestValidator.cs" />
+    <Compile Include="Services\DefaultRedirectUriValidator.cs" />
     <Compile Include="Services\InMemoryRelyingPartyService.cs" />
+    <Compile Include="Services\IRedirectUriValidator.cs" />
     <Compile Include="Services\IRelyingPartyService.cs" />
     <Compile Include="Configuration\Hosting\ITrackingCookieService.cs" />
     <Compile Include="Services\ICustomWsFederationRequestValidator.cs" />
     <Compile Include="Validation\SignInValidationResult.cs" />
     <Compile Include="Validation\SignInValidator.cs" />
+    <Compile Include="Validation\SignOutValidationResult.cs" />
+    <Compile Include="Validation\SignOutValidator.cs" />
     <Compile Include="WsFederationController.cs" />
   </ItemGroup>
   <ItemGroup>
