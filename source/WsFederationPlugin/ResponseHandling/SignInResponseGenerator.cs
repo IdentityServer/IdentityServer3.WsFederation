@@ -21,6 +21,7 @@ using IdentityServer3.Core.Extensions;
 using IdentityServer3.Core.Models;
 using IdentityServer3.Core.Services;
 using IdentityServer3.WsFederation.Logging;
+using IdentityServer3.WsFederation.Services;
 using IdentityServer3.WsFederation.Validation;
 using System;
 using System.Collections.Generic;
@@ -43,12 +44,14 @@ namespace IdentityServer3.WsFederation.ResponseHandling
         private readonly IdentityServerOptions _options;
         private readonly IUserService _users;
         private readonly IDictionary<string, object> _environment;
+        private readonly ICustomWsFederationClaimsService _customClaimsService;
 
-        public SignInResponseGenerator(IdentityServerOptions options, IUserService users, OwinEnvironmentService owinEnvironment)
+        public SignInResponseGenerator(IdentityServerOptions options, IUserService users, OwinEnvironmentService owinEnvironment, ICustomWsFederationClaimsService customClaimsService)
         {
             _options = options;
             _users = users;
             _environment = owinEnvironment.Environment;
+            _customClaimsService = customClaimsService;
         }
 
         private string IssuerUri
@@ -183,8 +186,10 @@ namespace IdentityServer3.WsFederation.ResponseHandling
                 mappedClaims.Add(new Claim(ClaimTypes.AuthenticationMethod, AuthenticationMethods.Unspecified));
             }
             mappedClaims.Add(AuthenticationInstantClaim.Now);
-            
-            return new ClaimsIdentity(mappedClaims, "idsrv");
+
+            var finalClaims = new List<Claim>(await _customClaimsService.TransformClaimsAsync(validationResult, mappedClaims));
+
+            return new ClaimsIdentity(finalClaims, "idsrv");
         }
 
         private SecurityToken CreateSecurityToken(SignInValidationResult validationResult, ClaimsIdentity outgoingSubject)
