@@ -170,11 +170,19 @@ namespace IdentityServer3.WsFederation.ResponseHandling
                 }
             }
 
+            // The AuthnStatement statement generated from the following 2
+            // claims is manditory for some service providers (i.e. Shibboleth-Sp). 
+            // The value of the AuthenticationMethod claim must be one of the constants in
+            // System.IdentityModel.Tokens.AuthenticationMethods.
+            // Password is the only one that can be directly matched, everything
+            // else defaults to Unspecified.
             if (validationResult.Subject.GetAuthenticationMethod() == Constants.AuthenticationMethods.Password)
             {
                 mappedClaims.Add(new Claim(ClaimTypes.AuthenticationMethod, AuthenticationMethods.Password));
-                mappedClaims.Add(AuthenticationInstantClaim.Now);
+            } else {
+                mappedClaims.Add(new Claim(ClaimTypes.AuthenticationMethod, AuthenticationMethods.Unspecified));
             }
+            mappedClaims.Add(AuthenticationInstantClaim.Now);
             
             return new ClaimsIdentity(mappedClaims, "idsrv");
         }
