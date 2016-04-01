@@ -166,7 +166,8 @@ namespace IdentityServer3.WsFederation
 
         private async Task<IHttpActionResult> ProcessSignOutAsync(SignOutRequestMessage msg)
         {
-            if (String.IsNullOrWhiteSpace(msg.Reply))
+            // in order to determine redirect url wreply and wtrealm must be non-empty
+            if (String.IsNullOrWhiteSpace(msg.Reply) || String.IsNullOrWhiteSpace(msg.GetParameter("wtrealm")))
             {
                 return RedirectToLogOut();
             }
