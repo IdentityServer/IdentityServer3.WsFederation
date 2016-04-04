@@ -187,7 +187,7 @@ namespace IdentityServer3.WsFederation.ResponseHandling
             }
             mappedClaims.Add(AuthenticationInstantClaim.Now);
 
-            var finalClaims = new List<Claim>(await _customClaimsService.TransformClaimsAsync(validationResult, mappedClaims));
+            var finalClaims = await _customClaimsService.TransformClaimsAsync(validationResult, mappedClaims);
 
             return new ClaimsIdentity(finalClaims, "idsrv");
         }
