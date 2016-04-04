@@ -21,6 +21,7 @@ using IdentityServer3.Core.Extensions;
 using IdentityServer3.Core.Models;
 using IdentityServer3.Core.Services;
 using IdentityServer3.WsFederation.Logging;
+using IdentityServer3.WsFederation.Services;
 using IdentityServer3.WsFederation.Validation;
 using System;
 using System.Collections.Generic;
@@ -43,12 +44,14 @@ namespace IdentityServer3.WsFederation.ResponseHandling
         private readonly IdentityServerOptions _options;
         private readonly IUserService _users;
         private readonly IDictionary<string, object> _environment;
+        private readonly ICustomWsFederationClaimsService _customClaimsService;
 
-        public SignInResponseGenerator(IdentityServerOptions options, IUserService users, OwinEnvironmentService owinEnvironment)
+        public SignInResponseGenerator(IdentityServerOptions options, IUserService users, OwinEnvironmentService owinEnvironment, ICustomWsFederationClaimsService customClaimsService)
         {
             _options = options;
             _users = users;
             _environment = owinEnvironment.Environment;
+            _customClaimsService = customClaimsService;
         }
 
         private string IssuerUri
@@ -170,13 +173,23 @@ namespace IdentityServer3.WsFederation.ResponseHandling
                 }
             }
 
+            // The AuthnStatement statement generated from the following 2
+            // claims is manditory for some service providers (i.e. Shibboleth-Sp). 
+            // The value of the AuthenticationMethod claim must be one of the constants in
+            // System.IdentityModel.Tokens.AuthenticationMethods.
+            // Password is the only one that can be directly matched, everything
+            // else defaults to Unspecified.
             if (validationResult.Subject.GetAuthenticationMethod() == Constants.AuthenticationMethods.Password)
             {
                 mappedClaims.Add(new Claim(ClaimTypes.AuthenticationMethod, AuthenticationMethods.Password));
-                mappedClaims.Add(AuthenticationInstantClaim.Now);
+            } else {
+                mappedClaims.Add(new Claim(ClaimTypes.AuthenticationMethod, AuthenticationMethods.Unspecified));
             }
-            
-            return new ClaimsIdentity(mappedClaims, "idsrv");
+            mappedClaims.Add(AuthenticationInstantClaim.Now);
+
+            var finalClaims = await _customClaimsService.TransformClaimsAsync(validationResult, mappedClaims);
+
+            return new ClaimsIdentity(finalClaims, "idsrv");
         }
 
         private SecurityToken CreateSecurityToken(SignInValidationResult validationResult, ClaimsIdentity outgoingSubject)
