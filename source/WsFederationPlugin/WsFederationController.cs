@@ -72,6 +72,7 @@ namespace IdentityServer3.WsFederation
         }
 
         [Route("")]
+        [SecurityHeaders(EnableCsp = false, EnableXfo = false)]
         public async Task<IHttpActionResult> Get()
         {
             Logger.Info("Start WS-Federation request");
