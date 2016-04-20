@@ -56,6 +56,11 @@ namespace IdentityServer3.WsFederation.Validation
                 result.Federation = message.Federation;
             }
 
+            if (!String.IsNullOrWhiteSpace(message.GetParameter("login_hint")))
+            {
+                result.LoginHint = message.GetParameter("login_hint");
+            }
+
             if (!subject.Identity.IsAuthenticated)
             {
                 result.IsSignInRequired = true;

@@ -40,6 +40,7 @@ namespace IdentityServer3.WsFederation.Validation
         public string ReplyUrl { get; set; }
         public string HomeRealm { get; set; }
         public string Federation { get; set; }
+        public string LoginHint { get; set; }
 
         public ClaimsPrincipal Subject { get; set; }
     }
