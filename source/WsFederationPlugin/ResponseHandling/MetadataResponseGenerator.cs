@@ -46,14 +46,7 @@ namespace IdentityServer3.WsFederation.ResponseHandling
         {
             get
             {
-                var uri = _options.IssuerUri;
-                if (String.IsNullOrWhiteSpace(uri))
-                {
-                    uri = _environment.GetIdentityServerBaseUrl();
-                    if (uri.EndsWith("/")) uri = uri.Substring(0, uri.Length - 1);
-                }
-
-                return uri;
+                return _environment.GetIdentityServerIssuerUri();
             }
         }
 

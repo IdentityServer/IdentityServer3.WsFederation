@@ -97,6 +97,14 @@ namespace IdentityServer3.WsFederation.Configuration
         public Registration<Services.IRedirectUriValidator> RedirectUriValidator { get; set; }
 
         /// <summary>
+        /// Gets or sets the custom claims service.
+        /// </summary>
+        /// <value>
+        /// The custom claims service.
+        /// </value>
+        public Registration<ICustomWsFederationClaimsService> CustomClaimsService { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="WsFederationServiceFactory"/> class.
         /// </summary>
         /// <param name="factory">The factory.</param>
