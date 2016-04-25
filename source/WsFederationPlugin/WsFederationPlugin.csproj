@@ -126,8 +126,10 @@
     <Compile Include="Results\SignOutResult.cs" />
     <Compile Include="Services\DefaultCustomWsFederationClaimsService.cs" />
     <Compile Include="Services\DefaultCustomWsFederationRequestValidator.cs" />
+    <Compile Include="Services\DefaultRedirectUriValidator.cs" />
     <Compile Include="Services\ICustomWsFederationClaimsService.cs" />
     <Compile Include="Services\InMemoryRelyingPartyService.cs" />
+    <Compile Include="Services\IRedirectUriValidator.cs" />
     <Compile Include="Services\IRelyingPartyService.cs" />
     <Compile Include="Configuration\Hosting\ITrackingCookieService.cs" />
     <Compile Include="Services\ICustomWsFederationRequestValidator.cs" />
