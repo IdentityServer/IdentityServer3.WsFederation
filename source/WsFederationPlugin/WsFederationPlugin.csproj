@@ -115,6 +115,7 @@
     <Compile Include="Configuration\Hosting\LogProviderExceptionLogger.cs" />
     <Compile Include="Configuration\Hosting\NoCacheAttribute.cs" />
     <Compile Include="Configuration\Hosting\SecurityHeadersAttribute.cs" />
+    <Compile Include="Configuration\WsFederationServiceFactoryExtensions.cs" />
     <Compile Include="Logging\LogSerializer.cs" />
     <Compile Include="Logging\Models\SignInValidationLog.cs" />
     <Compile Include="Models\RelyingParty.cs" />
