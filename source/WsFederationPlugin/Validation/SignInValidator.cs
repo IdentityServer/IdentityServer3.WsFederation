@@ -56,12 +56,6 @@ namespace IdentityServer3.WsFederation.Validation
                 result.Federation = message.Federation;
             }
 
-            if (!subject.Identity.IsAuthenticated)
-            {
-                result.IsSignInRequired = true;
-                return result;
-            }
-
             // check realm
             var rp = await _relyingParties.GetByRealmAsync(message.Realm);
 
@@ -74,6 +68,12 @@ namespace IdentityServer3.WsFederation.Validation
                     IsError = true,
                     Error = "invalid_relying_party"
                 };
+            }
+
+            if (!subject.Identity.IsAuthenticated)
+            {
+                result.IsSignInRequired = true;
+                return result;
             }
 
             result.ReplyUrl = rp.ReplyUrl;
