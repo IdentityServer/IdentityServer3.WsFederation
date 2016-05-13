@@ -31,6 +31,10 @@ namespace Host.Config
                     Realm = "urn:owinrp",
                     Enabled = true,
                     ReplyUrl = "http://localhost:10313/",
+                    PostLogoutRedirectUris = new List<string>
+                    {
+                        "http://localhost:10313/"
+                    },
                     TokenType = IdentityModel.Constants.TokenTypes.JsonWebToken,
                     TokenLifeTime = 60,
 

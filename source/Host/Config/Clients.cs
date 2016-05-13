@@ -274,6 +274,48 @@ namespace IdentityServer3.Host.Config
 
                 new Client
                 {
+                    ClientName = "MVC OWIN Hybrid Client",
+                    ClientId = "mvc.owin.hybrid",
+                    Flow = Flows.Hybrid,
+                    AllowAccessTokensViaBrowser = false,
+
+                    ClientSecrets = new List<Secret>
+                    {
+                        new Secret("secret".Sha256())
+                    },
+
+                    AllowedScopes = new List<string>
+                    {
+                        Constants.StandardScopes.OpenId,
+                        Constants.StandardScopes.Profile,
+                        Constants.StandardScopes.Email,
+                        Constants.StandardScopes.Roles,
+                        Constants.StandardScopes.OfflineAccess,
+                        "read",
+                        "write"
+                    },
+
+                    ClientUri = "https://identityserver.io",
+
+                    RequireConsent = false,
+                    AccessTokenType = AccessTokenType.Reference,
+
+                    RedirectUris = new List<string>
+                    {
+                        "https://localhost:44300/"
+                    },
+
+                    PostLogoutRedirectUris = new List<string>
+                    {
+                        "https://localhost:44300/"
+                    },
+
+                    LogoutUri = "https://localhost:44300/Home/OidcSignOut",
+                    LogoutSessionRequired = true
+                },
+
+                new Client
+                {
                     ClientName = "Resource Owner Flow Client",
                     Enabled = true,
                     ClientId = "roclient",
