@@ -87,6 +87,15 @@ namespace IdentityServer3.WsFederation.Configuration
         /// </value>
         public Registration<ICustomWsFederationRequestValidator> CustomRequestValidator { get; set; }
 
+        // optional
+        /// <summary>
+        /// Gets or sets the redirect URI validator service.
+        /// </summary>
+        /// <value>
+        /// The redirect URI validator service.
+        /// </value>
+        public Registration<Services.IRedirectUriValidator> RedirectUriValidator { get; set; }
+
         /// <summary>
         /// Gets or sets the custom claims service.
         /// </summary>

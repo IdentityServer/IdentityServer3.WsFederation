@@ -131,6 +131,11 @@ namespace IdentityServer3.WsFederation.Models
         public string DigestAlgorithm { get; set; }
 
         /// <summary>
+        /// Specifies allowed URIs to redirect to after logout
+        /// </summary>
+        public List<string> PostLogoutRedirectUris { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="RelyingParty"/> class.
         /// </summary>
         public RelyingParty()
@@ -143,6 +148,7 @@ namespace IdentityServer3.WsFederation.Models
 
             TokenLifeTime = 600;
             Enabled = true;
+            PostLogoutRedirectUris = new List<string>();
         }
     }
 }
