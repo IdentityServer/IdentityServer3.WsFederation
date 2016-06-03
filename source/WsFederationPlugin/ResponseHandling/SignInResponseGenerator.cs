@@ -97,7 +97,7 @@ namespace IdentityServer3.WsFederation.ResponseHandling
             return responseMessage;
         }
 
-        private async Task<ClaimsIdentity> CreateSubjectAsync(SignInValidationResult validationResult)
+        protected async Task<ClaimsIdentity> CreateSubjectAsync(SignInValidationResult validationResult)
         {
             var profileClaims = new List<Claim>();
             var mappedClaims = new List<Claim>();
