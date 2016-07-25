@@ -54,11 +54,6 @@ namespace IdentityServer3.WsFederation.Configuration
                 diag.TraceSource = liblog;
             }
 
-            if (options.IdentityServerOptions.LoggingOptions.EnableHttpLogging)
-            {
-                config.MessageHandlers.Add(new RequestResponseLogger());
-            }
-
             return config;
         }
 
