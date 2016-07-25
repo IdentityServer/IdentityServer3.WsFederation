@@ -33,5 +33,10 @@ namespace IdentityServer3.WsFederation.Logging.Models
         public string Realm { get; set; }
         public string RelyingPartyName { get; set; }
         public string ReplyUrl { get; set; }
+
+        public override string ToString()
+        {
+            return LogSerializer.Serialize(this);
+        }
     }
 }

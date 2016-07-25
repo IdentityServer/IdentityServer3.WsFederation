@@ -30,6 +30,7 @@ namespace IdentityServer3.WsFederation.Validation
     public class SignInValidator
     {
         private readonly static ILog Logger = LogProvider.GetCurrentClassLogger();
+
         private readonly IRelyingPartyService _relyingParties;
         private readonly ICustomWsFederationRequestValidator _customValidator;
 
@@ -81,6 +82,7 @@ namespace IdentityServer3.WsFederation.Validation
             result.SignInRequestMessage = message;
             result.Subject = subject;
 
+            Logger.Debug("Calling into custom validator: " + _customValidator.GetType().FullName);
             var customResult = await _customValidator.ValidateSignInRequestAsync(result);
             if (customResult.IsError)
             {
@@ -99,14 +101,14 @@ namespace IdentityServer3.WsFederation.Validation
 
         private void LogSuccess(SignInValidationResult result)
         {
-            var log = LogSerializer.Serialize(new SignInValidationLog(result));
-            Logger.InfoFormat("End WS-Federation signin request validation\n{0}", log);
+            var log = new SignInValidationLog(result);
+            Logger.InfoFormat("End WS-Federation signin request validation\n{0}", log.ToString());
         }
 
         private void LogError(string message, SignInValidationResult result)
         {
-            var log = LogSerializer.Serialize(new SignInValidationLog(result));
-            Logger.ErrorFormat("{0}\n{1}", message, log);
+            var log = new SignInValidationLog(result);
+            Logger.ErrorFormat("{0}\n{1}", message, log.ToString());
         }
     }
 }

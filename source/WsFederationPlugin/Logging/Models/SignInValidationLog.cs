@@ -45,5 +45,10 @@ namespace IdentityServer3.WsFederation.Logging
         public string HomeRealm { get; set; }
         public string Federation { get; set; }
         public string Subject { get; set; }
+
+        public override string ToString()
+        {
+            return LogSerializer.Serialize(this);
+        }
     }
 }
