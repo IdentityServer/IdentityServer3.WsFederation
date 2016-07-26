@@ -17,13 +17,15 @@
 using IdentityServer3.Core;
 using IdentityServer3.Core.Extensions;
 using IdentityServer3.Core.Models;
+using IdentityServer3.Core.Services.Default;
 using IdentityServer3.WsFederation.Configuration;
+using IdentityServer3.WsFederation.Events;
 using IdentityServer3.WsFederation.Hosting;
 using IdentityServer3.WsFederation.Logging;
 using IdentityServer3.WsFederation.ResponseHandling;
 using IdentityServer3.WsFederation.Results;
-using IdentityServer3.WsFederation.Validation;
 using IdentityServer3.WsFederation.Services;
+using IdentityServer3.WsFederation.Validation;
 using System;
 using System.ComponentModel;
 using System.IdentityModel.Services;
@@ -31,6 +33,7 @@ using System.Net.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web.Http;
+
 
 #pragma warning disable 1591
 
@@ -52,6 +55,7 @@ namespace IdentityServer3.WsFederation
         private readonly MetadataResponseGenerator _metadataResponseGenerator;
         private readonly ITrackingCookieService _cookies;
         private readonly WsFederationPluginOptions _wsFedOptions;
+        private readonly Core.Services.IEventService _events;
 
         public WsFederationController(
             SignInValidator validator,
@@ -60,7 +64,8 @@ namespace IdentityServer3.WsFederation
             ITrackingCookieService cookies,
             WsFederationPluginOptions wsFedOptions,
             IRedirectUriValidator redirectUriValidator,
-            SignOutValidator signOutValidator)
+            SignOutValidator signOutValidator,
+            Core.Services.OwinEnvironmentService environment)
         {
             _validator = validator;
             _signInResponseGenerator = signInResponseGenerator;
@@ -69,6 +74,8 @@ namespace IdentityServer3.WsFederation
             _wsFedOptions = wsFedOptions;
             _redirectUriValidator = redirectUriValidator;
             _signOutValidator = signOutValidator;
+
+            _events = environment.Environment.ResolveDependency<Core.Services.IEventService>() ?? new DefaultEventService();
         }
 
         [Route("")]
@@ -115,7 +122,7 @@ namespace IdentityServer3.WsFederation
         }
 
         [Route("metadata")]
-        public IHttpActionResult GetMetadata()
+        public async Task<IHttpActionResult> GetMetadata()
         {
             Logger.Info("WS-Federation metadata request");
 
@@ -128,6 +135,7 @@ namespace IdentityServer3.WsFederation
             var ep = Request.GetOwinContext().Environment.GetIdentityServerBaseUrl() + _wsFedOptions.MapPath.Substring(1);
             var entity = _metadataResponseGenerator.Generate(ep);
 
+            await _events.RaiseSuccessfulWsFederationEndpointEventAsync(WsFederationEventConstants.Operations.Metadata);
             return new MetadataResult(entity);
         }
 
@@ -143,11 +151,22 @@ namespace IdentityServer3.WsFederation
             if (result.IsError)
             {
                 Logger.Error(result.Error);
+                await _events.RaiseFailureWsFederationEndpointEventAsync(
+                    WsFederationEventConstants.Operations.SignIn,
+                    result.RelyingParty.Realm,
+                    result.Subject,
+                    result.Error);
+
                 return BadRequest(result.Error);
             }
 
             var responseMessage = await _signInResponseGenerator.GenerateResponseAsync(result);
             await _cookies.AddValueAsync(WsFederationPluginOptions.CookieName, result.ReplyUrl);
+
+            await _events.RaiseSuccessfulWsFederationEndpointEventAsync(
+                    WsFederationEventConstants.Operations.SignIn,
+                    result.RelyingParty.Realm,
+                    result.Subject);
 
             return new SignInResult(responseMessage);
         }
@@ -164,15 +183,33 @@ namespace IdentityServer3.WsFederation
             if (result.IsError)
             {
                 Logger.Error(result.Error);
+                await _events.RaiseFailureWsFederationEndpointEventAsync(
+                    WsFederationEventConstants.Operations.SignOut,
+                    result.RelyingParty.Realm,
+                    User as ClaimsPrincipal,
+                    result.Error);
+
                 return BadRequest(result.Error);
             }
 
             if (await _redirectUriValidator.IsPostLogoutRedirectUriValidAsync(msg.Reply, result.RelyingParty) == false)
             {
                 const string error = "invalid_signout_reply_uri";
+
                 Logger.Error(error);
+                await _events.RaiseFailureWsFederationEndpointEventAsync(
+                    WsFederationEventConstants.Operations.SignOut,
+                    result.RelyingParty.Realm,
+                    User as ClaimsPrincipal,
+                    error);
+
                 return BadRequest(error);
             }
+
+            await _events.RaiseSuccessfulWsFederationEndpointEventAsync(
+                    WsFederationEventConstants.Operations.SignIn,
+                    result.RelyingParty.Realm,
+                    User as ClaimsPrincipal);
 
             return RedirectToLogOut(msg.Reply);
         }
