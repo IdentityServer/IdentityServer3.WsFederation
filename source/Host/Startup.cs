@@ -13,6 +13,7 @@ namespace Host
         {
             // setup serilog to use diagnostics trace
             Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Debug()
                 .WriteTo.Trace(outputTemplate: "{Timestamp} [{Level}] ({Name}){NewLine} {Message}{NewLine}{Exception}")
                 .CreateLogger();
 
@@ -30,6 +31,14 @@ namespace Host
                     SigningCertificate = Certificate.Get(),
                     Factory = factory,
                     PluginConfiguration = ConfigurePlugins,
+
+                    EventsOptions = new EventsOptions
+                    {
+                        RaiseErrorEvents = true,
+                        RaiseFailureEvents = true,
+                        RaiseInformationEvents = true,
+                        RaiseSuccessEvents = true
+                    }
                 };
 
                 coreApp.UseIdentityServer(options);
