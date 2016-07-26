@@ -25,7 +25,7 @@ namespace IdentityServer3.WsFederation.Events
 {
     public static class WsFederationEventExtensions
     {
-        public static async Task RaiseSuccessfulWsFederationEndpointEventAsync(this IEventService events, string operation = null, string realm = null, ClaimsPrincipal subject = null)
+        public static async Task RaiseSuccessfulWsFederationEndpointEventAsync(this IEventService events, string operation, string realm, ClaimsPrincipal subject, string url)
         {
             var evt = new Event<WsFederationEndpointDetail>(
                 EventConstants.Categories.Endpoints,
@@ -36,13 +36,14 @@ namespace IdentityServer3.WsFederation.Events
                 {
                     Operation = operation,
                     Realm = realm,
-                    Subject = GetSubjectId(subject)
+                    Subject = GetSubjectId(subject),
+                    Url = url
                 });
 
             await events.RaiseAsync(evt);
         }
 
-        public static async Task RaiseFailureWsFederationEndpointEventAsync(this IEventService events, string operation, string realm, ClaimsPrincipal subject, string error)
+        public static async Task RaiseFailureWsFederationEndpointEventAsync(this IEventService events, string operation, string realm, ClaimsPrincipal subject, string url, string error)
         {
             var evt = new Event<WsFederationEndpointDetail>(
                  EventConstants.Categories.Endpoints,
@@ -53,7 +54,8 @@ namespace IdentityServer3.WsFederation.Events
                  {
                      Operation = operation,
                      Realm = realm,
-                     Subject = GetSubjectId(subject)
+                     Subject = GetSubjectId(subject),
+                     Url = url
                  }, error);
 
             await events.RaiseAsync(evt);

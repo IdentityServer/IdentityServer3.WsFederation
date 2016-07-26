@@ -23,5 +23,6 @@ namespace IdentityServer3.WsFederation.Events
         public string Operation { get; set; }
         public string Realm { get; set; }
         public string Subject { get; set; }
+        public string Url { get; set; }
     }
 }

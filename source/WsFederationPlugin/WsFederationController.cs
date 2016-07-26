@@ -135,7 +135,7 @@ namespace IdentityServer3.WsFederation
             var ep = Request.GetOwinContext().Environment.GetIdentityServerBaseUrl() + _wsFedOptions.MapPath.Substring(1);
             var entity = _metadataResponseGenerator.Generate(ep);
 
-            await _events.RaiseSuccessfulWsFederationEndpointEventAsync(WsFederationEventConstants.Operations.Metadata);
+            await _events.RaiseSuccessfulWsFederationEndpointEventAsync(WsFederationEventConstants.Operations.Metadata, null, null, null);
             return new MetadataResult(entity);
         }
 
@@ -155,6 +155,7 @@ namespace IdentityServer3.WsFederation
                     WsFederationEventConstants.Operations.SignIn,
                     result.RelyingParty.Realm,
                     result.Subject,
+                    Request.RequestUri.AbsoluteUri,
                     result.Error);
 
                 return BadRequest(result.Error);
@@ -166,7 +167,8 @@ namespace IdentityServer3.WsFederation
             await _events.RaiseSuccessfulWsFederationEndpointEventAsync(
                     WsFederationEventConstants.Operations.SignIn,
                     result.RelyingParty.Realm,
-                    result.Subject);
+                    result.Subject,
+                    Request.RequestUri.AbsoluteUri);
 
             return new SignInResult(responseMessage);
         }
@@ -187,6 +189,7 @@ namespace IdentityServer3.WsFederation
                     WsFederationEventConstants.Operations.SignOut,
                     result.RelyingParty.Realm,
                     User as ClaimsPrincipal,
+                    Request.RequestUri.AbsoluteUri,
                     result.Error);
 
                 return BadRequest(result.Error);
@@ -201,15 +204,17 @@ namespace IdentityServer3.WsFederation
                     WsFederationEventConstants.Operations.SignOut,
                     result.RelyingParty.Realm,
                     User as ClaimsPrincipal,
+                    Request.RequestUri.AbsoluteUri,
                     error);
 
                 return BadRequest(error);
             }
 
             await _events.RaiseSuccessfulWsFederationEndpointEventAsync(
-                    WsFederationEventConstants.Operations.SignIn,
+                    WsFederationEventConstants.Operations.SignOut,
                     result.RelyingParty.Realm,
-                    User as ClaimsPrincipal);
+                    User as ClaimsPrincipal,
+                    Request.RequestUri.AbsoluteUri);
 
             return RedirectToLogOut(msg.Reply);
         }
