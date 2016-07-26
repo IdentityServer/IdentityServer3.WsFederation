@@ -23,8 +23,20 @@ using System.Threading.Tasks;
 
 namespace IdentityServer3.WsFederation.Events
 {
+    /// <summary>
+    /// Extension methods for WS-Federation events
+    /// </summary>
     public static class WsFederationEventExtensions
     {
+        /// <summary>
+        /// Raises a success event for the WS-Federation endpoint
+        /// </summary>
+        /// <param name="events">The event service</param>
+        /// <param name="operation">The operation</param>
+        /// <param name="realm">The realm</param>
+        /// <param name="subject">The subject</param>
+        /// <param name="url">The url</param>
+        /// <returns></returns>
         public static async Task RaiseSuccessfulWsFederationEndpointEventAsync(this IEventService events, string operation, string realm, ClaimsPrincipal subject, string url)
         {
             var evt = new Event<WsFederationEndpointDetail>(
@@ -43,6 +55,16 @@ namespace IdentityServer3.WsFederation.Events
             await events.RaiseAsync(evt);
         }
 
+        /// <summary>
+        /// Raises a failure event for the WS-Federation endpoint
+        /// </summary>
+        /// <param name="events">The event service</param>
+        /// <param name="operation">The operation</param>
+        /// <param name="realm">The realm</param>
+        /// <param name="subject">The subject</param>
+        /// <param name="url">The url</param>
+        /// <param name="error">The error</param>
+        /// <returns></returns>
         public static async Task RaiseFailureWsFederationEndpointEventAsync(this IEventService events, string operation, string realm, ClaimsPrincipal subject, string url, string error)
         {
             var evt = new Event<WsFederationEndpointDetail>(

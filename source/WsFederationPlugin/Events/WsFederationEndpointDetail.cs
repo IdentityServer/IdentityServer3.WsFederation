@@ -17,12 +17,42 @@
 
 namespace IdentityServer3.WsFederation.Events
 {
+    /// <summary>
+    /// Details for WS-Federation endpoint events
+    /// </summary>
     public class WsFederationEndpointDetail
     {
-        public string EndpointName { get; set; } = "wsfederation";
+        /// <summary>
+        /// Creates details with default values
+        /// </summary>
+        public WsFederationEndpointDetail()
+        {
+            EndpointName = "wsfederation";
+        }
+
+        /// <summary>
+        /// Endpoint name
+        /// </summary>
+        public string EndpointName { get; internal set; }
+
+        /// <summary>
+        /// Operation name like signin, signout or metadata
+        /// </summary>
         public string Operation { get; set; }
+
+        /// <summary>
+        /// WS-Federation realm
+        /// </summary>
         public string Realm { get; set; }
+
+        /// <summary>
+        /// Subject (if any)
+        /// </summary>
         public string Subject { get; set; }
+
+        /// <summary>
+        /// Full request URL
+        /// </summary>
         public string Url { get; set; }
     }
 }
