@@ -6,4 +6,4 @@ Dev build: [![Build status](https://ci.appveyor.com/api/projects/status/ldvb26el
 
 WS-Federation Plugin for IdentityServer3
 
-See [here](https://identityserver.github.io/Documentation/docs/wsFederation/overview.html) for documentation.
+See [here](https://identityserver.github.io/Documentation/docsv2/wsFederation/overview.html) for documentation.
