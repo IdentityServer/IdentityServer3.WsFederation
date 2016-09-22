@@ -42,7 +42,7 @@ namespace IdentityServer3.WsFederation
     [HostAuthentication(Constants.PrimaryAuthenticationType)]
     [RoutePrefix("")]
     [NoCache]
-    [SecurityHeaders(EnableCsp=false)]
+    [SecurityHeaders(EnableCsp = false)]
     [EditorBrowsable(EditorBrowsableState.Never)]
     public class WsFederationController : ApiController
     {
@@ -91,21 +91,28 @@ namespace IdentityServer3.WsFederation
 
             Logger.DebugFormat("PublicUri: [{0}]", publicRequestUri);
 
-            if (WSFederationMessage.TryCreateFromUri(publicRequestUri, out message))
+            try
             {
-                var signin = message as SignInRequestMessage;
-                if (signin != null)
+                if (WSFederationMessage.TryCreateFromUri(publicRequestUri, out message))
                 {
-                    Logger.Info("WsFederation signin request");
-                    return await ProcessSignInAsync(signin);
-                }
+                    var signin = message as SignInRequestMessage;
+                    if (signin != null)
+                    {
+                        Logger.Info("WsFederation signin request");
+                        return await ProcessSignInAsync(signin);
+                    }
 
-                var signout = message as SignOutRequestMessage;
-                if (signout != null)
-                {
-                    Logger.Info("WsFederation signout request");
-                    return await ProcessSignOutAsync(signout);
+                    var signout = message as SignOutRequestMessage;
+                    if (signout != null)
+                    {
+                        Logger.Info("WsFederation signout request");
+                        return await ProcessSignOutAsync(signout);
+                    }
                 }
+            }
+            catch (Exception e)
+            {
+                return BadRequest("Invalid WS-Federation request: " + e.Message);
             }
 
             return BadRequest("Invalid WS-Federation request");
@@ -219,7 +226,7 @@ namespace IdentityServer3.WsFederation
             return RedirectToLogOut(msg.Reply);
         }
 
-       private  IHttpActionResult RedirectToLogin(SignInValidationResult result)
+        private IHttpActionResult RedirectToLogin(SignInValidationResult result)
         {
             Uri publicRequestUri = GetPublicRequestUri();
 
@@ -235,10 +242,10 @@ namespace IdentityServer3.WsFederation
             {
                 message.AcrValues = new[] { result.Federation };
             }
-            
+
             var env = Request.GetOwinEnvironment();
             var url = env.CreateSignInRequest(message);
-            
+
             return Redirect(url);
         }
 
