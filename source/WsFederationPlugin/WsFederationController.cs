@@ -160,8 +160,8 @@ namespace IdentityServer3.WsFederation
                 Logger.Error(result.Error);
                 await _events.RaiseFailureWsFederationEndpointEventAsync(
                     WsFederationEventConstants.Operations.SignIn,
-                    result.RelyingParty.Realm,
-                    result.Subject,
+                    result.RelyingParty != null ? result.RelyingParty.Realm : string.Empty,
+                    result.Subject ?? new ClaimsPrincipal(),
                     Request.RequestUri.AbsoluteUri,
                     result.Error);
 
