@@ -112,7 +112,7 @@ namespace IdentityServer3.WsFederation
             }
             catch (Exception e)
             {
-                return BadRequest("Invalid WS-Federation request: " + e.Message);
+                Logger.ErrorException("Error in WS-Federation request handling", e);
             }
 
             return BadRequest("Invalid WS-Federation request");
