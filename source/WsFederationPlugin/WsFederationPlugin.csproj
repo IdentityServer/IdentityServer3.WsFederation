@@ -102,6 +102,7 @@
     <Compile Include="App_Packages\LibLog.4.2\LibLog.cs" />
     <Compile Include="Configuration\Hosting\AutofacConfig.cs" />
     <Compile Include="Configuration\Hosting\AutofacDependencyResolver.cs" />
+    <Compile Include="Configuration\Hosting\ErrorPageFilterAttribute.cs" />
     <Compile Include="Configuration\Hosting\LibLogTraceListener.cs" />
     <Compile Include="Configuration\PluginAppBuilderExtensions.cs" />
     <Compile Include="Configuration\Hosting\WebApiConfig.cs" />
