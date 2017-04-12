@@ -44,6 +44,7 @@ namespace IdentityServer3.WsFederation
     [NoCache]
     [SecurityHeaders(EnableCsp=false)]
     [EditorBrowsable(EditorBrowsableState.Never)]
+    [ErrorPageFilter]
     public class WsFederationController : ApiController
     {
         private readonly static ILog Logger = LogProvider.GetCurrentClassLogger();
